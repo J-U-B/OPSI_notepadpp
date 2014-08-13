@@ -1,0 +1,34 @@
+[Package]
+version: 1
+depends: 
+incremental: False
+
+[Product]
+type: localboot
+id: notepadpp
+name: Notepad Plus Plus
+description: Free source code editor
+advice: MPIMSP/Borrmann
+version: 6.6.8
+priority: 0
+licenseRequired: False
+productClasses: 
+setupScript: setup.ins
+uninstallScript: uninstall.ins
+updateScript: 
+alwaysScript: 
+onceScript: 
+customScript: 
+userLoginScript: 
+
+[ProductProperty]
+type: bool
+name: disable_update
+description: Disables the automatic updates
+default: True
+
+[Changelog]
+ * SAVE COMMENT: initial version
+
+ -- Mike Borrmann <borrmann@mpi-halle.mpg.de> Wed, 13 August 2014 11:20:00 + 0100
+
