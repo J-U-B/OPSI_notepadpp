@@ -9,7 +9,7 @@ id: notepadpp
 name: Notepad Plus Plus
 description: Free source code editor
 advice: MPIMSP/Borrmann
-version: 6.6.8
+version: 6.7.5
 priority: 0
 licenseRequired: False
 productClasses: 
@@ -24,11 +24,18 @@ userLoginScript:
 [ProductProperty]
 type: bool
 name: disable_update
-description: Disables the automatic updates
+description: Disables the automatic program and plugin updates
 default: True
 
 [Changelog]
+ * SAVE COMMENT: Update to 6.7.5
+
+ -- Mike Borrmann <borrmann@mpi-halle.mpg.de> Thu, 12 March 2015 15:40:00 + 0100
+
+
  * SAVE COMMENT: initial version
 
  -- Mike Borrmann <borrmann@mpi-halle.mpg.de> Wed, 13 August 2014 11:20:00 + 0100
+
+
 

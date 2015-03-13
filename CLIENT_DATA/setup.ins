@@ -26,7 +26,7 @@ Message=Installing Notepad ++
 
 Set $ProductId$       = "notepadpp"
 Set $ProductName$     = "Notepad Plus Plus"
-Set $Version$         = "6.6.8"
+Set $Version$         = "6.7.5"
 Set $MinimumSpace$    = "100 MB"
 Set $InstallDir$      = "%ProgramFiles32Dir%\"+$ProductId$
 
@@ -51,7 +51,8 @@ Files_DisableUpdates
 endif
 
 [Winbatch_Install]
-"%ScriptPath%\files\npp.6.6.8.Installer.exe" /S /D=$InstallDir$
+"%ScriptPath%\files\npp.6.7.5.Installer.exe" /S /D=$InstallDir$
 
 [Files_DisableUpdates]
 delete -sf "$InstallDir$\updater\"
+delete -f "$InstallDir$\plugins\PluginManager.dll"
