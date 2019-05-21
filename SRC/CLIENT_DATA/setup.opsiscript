@@ -1,0 +1,233 @@
+;======================================================================
+; setup.ins NOTEPAD++
+; Installer type: NSIS
+; 
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 17:24:55 +0200
+;======================================================================
+
+;======================================================================
+[Initial]
+;======================================================================
+setLogLevel=5
+; Log Errors in Logfile and abort:
+ExitOnError=true
+; Show syntax errors in the script:
+ScriptErrorMessages=off
+; Dont trace step by step through the script:
+TraceMode=off 
+; Let started programs run in front of the winst window
+StayOnTop=false 
+
+;======================================================================
+[Actions]
+;======================================================================
+include_insert "%ScriptPath%\product_variables.opsiinc"
+
+
+;=== Check free space
+if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
+	LogError "Not enough space on %SystemDrive%, " + $MinimumSpace$ + " on drive %SystemDrive% needed for " + $ProductId$
+	isFatalError
+	; Stop process and set installation status to failed
+else
+	;=== remove previous installation
+	if FileExists("%ScriptPath%\delsub.opsiinc")
+		comment  "Starting uninstall sub section"
+		; sub "%ScriptPath%\delsub.opsiinc"	
+		include_append "%ScriptPath%\delsub.opsiinc"
+		sub_delsub_main
+	else
+		logError "Can't find uninstaller script"
+		isFatalError "delsub.opsiinc not found"
+	endif	
+	
+	; Start the installation
+	ShowBitmap $Img_Install$ $ProductName$
+	Message "Installing " + $ProductName$ + " " + $Version$+ " (" + $sw_arch$ + " bit)"
+	
+	marktime	
+	
+	if not (FileExists($Installer$))
+		logError "Installer not found: [" + $Installer$ + "]"
+		isFatalError
+	endif
+	
+	comment "Start setup program"
+	Switch $InstallerType$
+		Case "MSI"
+			Winbatch_install_msi
+			Sub_check_exitcode_msi
+		EndCase
+		Case "INNO"
+			Winbatch_install_inno
+			Sub_check_exitcode_inno
+		EndCase
+		Case "NSIS"
+			Winbatch_install_nsis
+			Sub_check_exitcode_nsis
+		EndCase	
+		DefaultCase
+			logError "Unsupported insaller type: [" + $InstallerType$ + "]"
+			isFatalError			
+		EndCase	
+	EndSwitch
+	
+	set $MainBin$ = $InstallDir$+$CheckBin$
+	
+	if not (FileExists($MainBin$))
+		logError "Main binary not found! [" + $InstallDir$+$MainBin$ + "]"
+		isFatalError
+	endif
+	
+	;=== create desktop link if requested
+	if ($pr_DesktopLink$ = "true")
+		LinkFolder_CreateDesktopLink
+	endif
+
+
+	;=== Create entries in start menu
+	LinkFolder_clear_StartMenuLinks
+	;LinkFolder_create_StartMenuLinks
+	
+	
+	;=== select application language
+	comment "Set application language:"
+	Switch $sw_lang$
+		Case "auto"
+			if $system_language$ = "0407"
+				comment "    detected language: German"
+				Set $LangSourceFile$ = "german.xml"
+			endif
+			if $system_language$ = "0409"
+				comment "    detected language: English"
+				Set $LangSourceFile$ = "english.xml"
+			endif
+		EndCase
+		Case "de"
+			comment "    selected language by property: German"
+			Set $LangSourceFile$ = "german.xml"
+		EndCase
+		Case "en"
+			comment "    selected language by property: English"
+			Set $LangSourceFile$ = "english.xml"
+		EndCase
+	EndSwitch
+	comment "    ...generating 'nativeLang.xml'"
+	Files_copy_lang
+
+	;=== use updater?
+	if ($pr_Updater$ = "no")
+		comment "Disable auto update:"
+		
+		; patch XML in installdir to prohibit search for updates
+		comment "    Patching XML config file"
+		XMLPatch_config $InstallDir$ + "\config.model.xml"
+		
+		; delete directory 'updater' to remove menu entries under "Help"
+		comment "   Remove updater directory"
+		Files_uninstall_updater
+	endif
+	
+	;=== custom post install
+	comment "include custom post install file"
+	if not ($CustomPostInstall$ = "none")
+		if FileExists("%ScriptPath%\custom\" + $CustomPostInstall$)
+			ShowBitmap $Img_Install_Custom$ $ProductName$
+			include_insert "%ScriptPath%\custom\" + $CustomPostInstall$
+			ShowBitmap $Img_Install$ $ProductName$
+		endif
+	endif
+	
+	;=== measure installation time
+	set $TimeDiff$ = getDiffTimeSec
+	Message  "Setup time: " + $TimeDiff$ + " seconds"	
+	
+endif
+
+ 
+;======================================================================
+[Winbatch_install_msi]
+;======================================================================
+$MSI_Inst_Cmd$ $MSI_Inst_Opts$  
+ 
+;======================================================================
+[Winbatch_install_inno]
+;======================================================================
+$Installer$ $INNO_Inst_Opts$ 
+ 
+;======================================================================
+[Winbatch_install_nsis]
+;======================================================================
+$Installer$ $NSIS_Inst_Opts$
+ 
+
+;====================================================================== 
+[ShellInAnIcon_copy_default_config]
+;======================================================================
+copy /Y "%ScriptPath%\custom\$CustomConfig$"  "$InstallDir$$DefaultXML$"
+ 
+ 
+;=====================================================================
+[LinkFolder_clear_StartMenuLinks]
+;=====================================================================
+set_basefolder common_programs
+;set_subfolder ""
+;delete_element "$StrippedProductId$"
+set_subfolder "$ProductName$"
+delete_element "Uninstall $ProductName$"
+ 
+;=====================================================================
+[LinkFolder_CreateDesktopLink]
+;=====================================================================
+set_basefolder common_desktopdirectory
+set_subfolder ""
+set_link
+       name: $ProductName$
+       target: "$MainBin$"
+       parameters:
+       working_dir: "$InstallDir$"
+       icon_file: "$MainBin$"
+       icon_index:
+end_link
+
+
+;=====================================================================
+[LinkFolder_create_StartMenuLinks]
+;=====================================================================
+set_basefolder common_programs
+set_subfolder "$ProductName$"
+set_link 
+	name: $ProductName$
+	target: "$MainBin$"
+	parameters:
+	working_dir: "$InstallDir$"
+	icon_file:
+	icon_index:
+end_link
+
+
+;=====================================================================
+[Files_copy_lang]
+;=====================================================================
+copy "$InstallDir$\localization\$LangSourceFile$" "$InstallDir$"
+move "$InstallDir$\$LangSourceFile$" "$InstallDir$\nativeLang.xml"
+
+
+;=====================================================================
+[Files_uninstall_updater]
+;=====================================================================
+delete -sf "$InstallDir$\updater"
+
+
+;=====================================================================
+[XMLPatch_config]
+;=====================================================================
+openNodeSet
+	documentroot
+	all_childelements_with:
+	 elementname: "GUIConfigs"
+	all_childelements_with:
+	 elementname: "GUIConfig"
+	 attribute: "name" value="noUpdate"
+end
+SetText "yes"

@@ -1,0 +1,117 @@
+{{! ========================================================================== }}
+{{!  Norepad++ CONTROL                                                         }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-05-21 16:59:35 +0200           }}
+{{! ========================================================================== }}
+[Package]
+version: {{O_PKG_VER}}
+depends: 
+incremental: False
+
+[Product]
+type: localboot
+id: {{TESTPREFIX}}{{ORGPREFIX}}{{O_SOFTWARE}}
+name: {{O_SOFTWARE_NAME}}
+description: Notepad++ is a free source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GPL License.
+ ___
+ Homepage: https://notepad-plus-plus.org/
+ Changelog: {{O_SOFTWARE_CHANGES}}
+advice: Maintainer: Jens Boettge <boettge@mpi-halle.mpg.de>
+ Organization: {{ORGNAME}}
+ Release date: {{O_RELEASE_DATE}}
+version: {{O_SOFTWARE_VER}}
+priority: 0
+licenseRequired: False
+productClasses: web & mail
+setupScript: setup.opsiscript
+uninstallScript: uninstall.opsiscript
+updateScript: 
+alwaysScript: 
+onceScript: 
+customScript: 
+userLoginScript: 
+
+[ProductProperty]
+type: bool
+name: kill_running
+description: kill running instance (for software on_demand)
+default: False
+
+[ProductProperty]
+type: unicode
+name: install_architecture
+multivalue: False
+editable: False
+description: which architecture (32/64 bit) should be installed
+values: ["32 bit", "64 bit", "sysnative"]
+default: ["sysnative"]
+
+[ProductProperty]
+type: unicode
+name: language
+multivalue: False
+editable: False
+description: application language
+values: ["auto", "de", "en"]
+default: ["auto"]
+
+[ProductProperty]
+type: unicode
+name: updater
+multivalue: False
+editable: False
+description: look for updates and inform user?
+values: ["no", "yes"]
+default: ["no"]
+
+[ProductProperty]
+type: bool
+name: link_desktop
+description: generate or delete Desktop link
+default: False
+
+[ProductProperty]
+type: unicode
+name: custom_post_install
+multivalue: False
+editable: True
+description: Define filename for include script in custom directory after installation
+values: ["custom_test.opsiinc", "none", "post-install.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: custom_post_uninstall
+multivalue: False
+editable: True
+description: Define filename for include script in custom directory after deinstallation
+values: ["custom_test.opsiinc", "none", "post-uninstall.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: log_level
+multivalue: False
+editable: False
+{{#ifdef_testing}}
+description: Loglevel for this package ({{DEFAULT_TESTING_LOGLEVEL}})
+{{/ifdef_testing}}
+{{^ifdef_testing}}
+description: Loglevel for this package ({{DEFAULT_RELEASE_LOGLEVEL}})
+{{/ifdef_testing}}
+values: ["default", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+default: ["default"]
+
+
+[Changelog]
+{{! The changelog is outsourced  to a separate file in the root of this project. }}
+{{! It will be included on building the OPSI package. }}
+
+
+
+
+
+
+
+
+
+
