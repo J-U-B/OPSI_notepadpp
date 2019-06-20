@@ -1,6 +1,10 @@
+notepadpp 7.7.1-2:
+	* product update --> 7.7.1
+	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-06-20 06:56:55 +0200
+
 notepadpp 7.7-2:
 	* product update --> 7.7
-	* complete revision of package
+	* complete revision of package (ready for o4i)
 	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 09:01:26 +0200
 
 	
