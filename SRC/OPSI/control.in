@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-05-21 16:59:35 +0200           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-01 14:58:07 +0200           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -71,7 +71,7 @@ default: False
 
 [ProductProperty]
 type: unicode
-name: custom_post_install
+name: custom-post-install
 multivalue: False
 editable: True
 description: Define filename for include script in custom directory after installation
@@ -80,11 +80,11 @@ default: ["none"]
 
 [ProductProperty]
 type: unicode
-name: custom_post_uninstall
+name: custom-post-deinstall
 multivalue: False
 editable: True
 description: Define filename for include script in custom directory after deinstallation
-values: ["custom_test.opsiinc", "none", "post-uninstall.opsiinc"]
+values: ["custom_test.opsiinc", "none", "post-deinstall.opsiinc"]
 default: ["none"]
 
 [ProductProperty]

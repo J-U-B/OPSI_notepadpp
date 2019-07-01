@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 16:26:47 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:59:05 +0200
 ;=====================================================================
 
 
@@ -181,7 +181,7 @@ endif
 if ($ExitCode$ = "0") and not ($Uninst_RegDir$ = "")
 	;=== does the installation directory still exist?
 		if (FileExists($Uninst_RegDir$))
-			logWarning "Install directory still exists: [" + $Uninst_RegDir$ + "]"
+			comment "INFO: Install directory still exists: [" + $Uninst_RegDir$ + "]. Trying to delete."
 			;=== try final cleanup
 			Files_del_InstallDir
 		endif

@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.4.1
+# Version: 2.4.2
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2019-05-21 13:16:42 +0200
+# 2019-07-01 15:03:36 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download
@@ -69,7 +69,7 @@ else
 endif
 
 ### build "batteries included' package?
-ALLINC ?= false
+ALLINC ?= true
 ALLINC_SEL := "[true] [false]"
 AFX := $(firstword $(ALLINC))
 AFY := $(shell echo $(AFX) | tr A-Z a-z)

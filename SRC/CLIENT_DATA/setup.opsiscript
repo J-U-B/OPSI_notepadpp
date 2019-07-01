@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 17:24:55 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:39:15 +0200
 ;======================================================================
 
 ;======================================================================
@@ -79,6 +79,23 @@ else
 		isFatalError
 	endif
 	
+	
+	;=== extract language files form installer
+	if (FileExists($LocaleDir$))
+		ShowBitmap $Img_Plugins$ $ProductName$
+		ShellInAnIcon_extract_languages
+		set $ExitCode$ = GetLastExitCode
+		if not($ExitCode$ = "0")
+			logError "Error " + $ExitCode$ + " while extracting language files from installer."
+		endif
+	else
+		logError "Target directory for language files does not exist"
+	endif
+	
+	
+	;=== configure application
+	ShowBitmap $Img_Config$ $ProductName$
+	
 	;=== create desktop link if requested
 	if ($pr_DesktopLink$ = "true")
 		LinkFolder_CreateDesktopLink
@@ -112,7 +129,7 @@ else
 			Set $LangSourceFile$ = "english.xml"
 		EndCase
 	EndSwitch
-	comment "    ...generating 'nativeLang.xml'"
+	comment "    ...selection of 'nativeLang.xml'"
 	Files_copy_lang
 
 	;=== use updater?
@@ -160,6 +177,11 @@ $Installer$ $INNO_Inst_Opts$
 ;======================================================================
 $Installer$ $NSIS_Inst_Opts$
  
+;======================================================================
+[ShellInAnIcon_extract_languages]
+;======================================================================
+$SEVENZIP$ e -o$LocaleDir$ $Installer$ -y "*\nppLocalization\*.xml"
+exit %ERRORLEVEL%
 
 ;====================================================================== 
 [ShellInAnIcon_copy_default_config]

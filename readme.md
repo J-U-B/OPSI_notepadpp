@@ -90,7 +90,7 @@ der Download der Software beim Erstellen des OPSI-Paketes und nicht erst bei
 dessen Installation:
 > *<code>ALLINC=[true|false]</code>*
 
-Standard ist hier die Erstellung des leichtgewichtigen Paketes (```ALLINC=false```).
+Standard ist hier die Erstellung des vollstaendigen Paketes (```ALLINC=true```).
 
 Bei der Installation des Paketes im Depot wird ein eventuell vorhandenes 
 ```files```-Verzeichnis zunaechst gesichert und vom ```postinst```-Skript
@@ -147,9 +147,9 @@ Die Installation der Software laesst sich ueber eine Reihe von Properties beeinf
 Default-Konfiguration angegeben werden. Diese muss im Verzeichnis <code>custom</code>
 liegen und ueberschreibt die vom Installer angelegte Minimalkonfiguration
 (<code>notepadpp.xml</code>).
-* **<code>custom_post_install</code>** - Das hier angegebene OPSI-Script wird
+* **<code>custom-post-install</code>** - Das hier angegebene OPSI-Script wird
 ins Setup eingebunden und im Anschluss an die Installation ausgefuehrt.
-* **<code>custom_post_uninstall</code>** - Das hier angegebene OPSI-Script wird
+* **<code>custom-post-deinstall</code>** - Das hier angegebene OPSI-Script wird
 in die Deinstallation eingebunden und im Anschluss ausgefuehrt.
 * **<code>install_architecture</code>** - Hier kann zwischen der 32- und der
 64-Bit-Version der Software gewaehlt werden. Standardmaessig wird die zum 
@@ -286,4 +286,4 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2019-05-21 17:07:45 +0200
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2019-07-01 14:59:49 +0200

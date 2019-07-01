@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOREPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 17:20:19 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:08:47 +0200
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -85,6 +85,7 @@ Set $Img_Uninstall$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninsta
 Set $Img_Uninstall_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall_custom.png"
 Set $Img_Prepare$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_prepare.png"
 Set $Img_Plugins$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_plugins.png"
+Set $Img_Config$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_config.png"
 Set $Img_Update$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_update.png"
 
 comment "preparing..."
@@ -143,8 +144,8 @@ Set $pr_DesktopLink$ 		= GetProductProperty("link_desktop","False")
 ;-----------------------------------------------------------
 ;*** properties: post install/uninstall
 ;-----------------------------------------------------------
-set $CustomPostInstall$ 	= getProductProperty("custom_post_install","none")
-set $CustomPostUninstall$ 	= getProductProperty("custom_post_uninstall","none")
+set $CustomPostInstall$ 	= getProductProperty("custom-post-install","none")
+set $CustomPostUninstall$ 	= getProductProperty("custom-post-deinstall","none")
 
 ;-----------------------------------------------------------
 ;*** select PSDETAIL:
@@ -153,6 +154,8 @@ if (CompareDotSeparatedNumbers($NTVersion$, ">=", "10.0"))
 	set $PSDETAIL$ 			= "%ScriptPath%\bin\psdetail4.exe"
 endif
 set $PSDETAIL_mod$			= ""
+
+set $SEVENZIP$				= "%ScriptPath%\bin\7z.exe"
 
 ;-----------------------------------------------------------
 ;*** misc settings
@@ -188,6 +191,7 @@ Set $Installer$		  	= "%ScriptPath%\files\" + $StrippedProductId$ + "-{{O_SOFTWA
 ;Set $InstallDir$      	= $InstallBase$ + "\" + stringReplace($ProductName$," ", "") + "\"
 ;Set $InstallDir$      	= $InstallBase$ + "\" + $ProductName$ + "\"
 Set $InstallDir$      	= $InstallBase$ + "\" + $StrippedProductId$ + "\"
+Set $LocaleDir$			= $InstallDir$ + "localization"
 Set $MinimumSpace$    	= "30 MB"
 ;Set $CheckBin$       	= $StrippedProductId$ + ".exe"
 Set $CheckBin$       	= "notepad++.exe"
