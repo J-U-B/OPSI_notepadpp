@@ -6,7 +6,9 @@ notepadpp 7.7.1-4:
 	* added changelog from previous code base
 	* adjusted description in control (en/de)
 	* pystache: use UTF-8 encoding
-	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-02 15:00:23 +0200
+	* fixed extraction of language files
+	* control: URLs moved from description to advice
+	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-03 13:42:22 +0200
 	
 notepadpp 7.7.1-3:
 	* fixed property names and scripts for custom scripts

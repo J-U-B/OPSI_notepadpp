@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-02 08:30:28 +0200           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-03 13:36:59 +0200           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -12,13 +12,12 @@ type: localboot
 id: {{TESTPREFIX}}{{ORGPREFIX}}{{O_SOFTWARE}}
 name: {{O_SOFTWARE_NAME}}
 description: • Notepad++ is a free text editor optimized for programming, etc. with syntax highlighting for many programming languages and code folding. 
- • Texteditor optimiert für die Programmierung u.a. mit Syntaxhervorhebung für viele Programmiersprachen und Code-Faltung.
- ___
- Homepage: https://notepad-plus-plus.org/
- Changelog: {{O_SOFTWARE_CHANGES}}
+    • Texteditor optimiert für die Programmierung u.a. mit Syntaxhervorhebung für viele Programmiersprachen und Code-Faltung.
 advice: Maintainer: Jens Boettge <boettge@mpi-halle.mpg.de>
- Organization: {{ORGNAME}}
- Release date: {{O_RELEASE_DATE}}
+    Organization: {{ORGNAME}}
+    Release date: {{O_RELEASE_DATE}}
+    Homepage: https://notepad-plus-plus.org/
+    Changelog: {{O_SOFTWARE_CHANGES}}    
 version: {{O_SOFTWARE_VER}}
 priority: 0
 licenseRequired: False

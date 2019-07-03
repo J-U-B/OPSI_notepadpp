@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:39:15 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-03 13:37:52 +0200
 ;======================================================================
 
 ;======================================================================
@@ -180,7 +180,7 @@ $Installer$ $NSIS_Inst_Opts$
 ;======================================================================
 [ShellInAnIcon_extract_languages]
 ;======================================================================
-$SEVENZIP$ e -o$LocaleDir$ $Installer$ -y "*\nppLocalization\*.xml"
+"$SEVENZIP$" e -o"$LocaleDir$" "$Installer$" -y "*\nppLocalization\*.xml"
 exit %ERRORLEVEL%
 
 ;====================================================================== 
