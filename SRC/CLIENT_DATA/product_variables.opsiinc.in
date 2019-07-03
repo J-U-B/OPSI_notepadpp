@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOREPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:08:47 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-02 07:52:19 +0200
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -139,7 +139,7 @@ Set $pr_Updater$ 			= GetProductProperty("updater","no")
 ;-----------------------------------------------------------
 ;*** property: create desktop/startmenu/quickstart link?
 ;-----------------------------------------------------------
-Set $pr_DesktopLink$ 		= GetProductProperty("link_desktop","False")
+Set $pr_DesktopLink$ 		= GetProductProperty("desktop-link","False")
 
 ;-----------------------------------------------------------
 ;*** properties: post install/uninstall
@@ -196,6 +196,7 @@ Set $MinimumSpace$    	= "30 MB"
 ;Set $CheckBin$       	= $StrippedProductId$ + ".exe"
 Set $CheckBin$       	= "notepad++.exe"
 Set	$DefaultXML$        = $StrippedProductId$ + ".xml"
+Set $PathToExe$			= $InstallDir$ + $CheckBin$
 
 Set $LogDir$			= "%SystemDrive%\tmp"
 Set $Inst_Log$			= $LogDir$ + "\"+$ProductId$+"_install.log"

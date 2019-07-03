@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-01 16:59:05 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-02 07:27:09 +0200
 ;=====================================================================
 
 
@@ -144,7 +144,7 @@ sub_check_PathVar
 
 ;=== compare current Uninstaller with InstallDir from this package:
 if not (lower($Uninstaller$) = lower(stringReplace($UninstallString$,'"','')))
-	logWarning "Expected $UninstallString$ from registry does not match $Uninstaller$ from package:"
+	comment "INFO: Expected $UninstallString$ from registry does not match $Uninstaller$ from package:"
 	comment "   [" + $UninstallString$ + "] <> [" + $Uninstaller$ + "]"
 endif
 

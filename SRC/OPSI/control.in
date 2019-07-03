@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-01 14:58:07 +0200           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-02 08:30:28 +0200           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -11,7 +11,8 @@ incremental: False
 type: localboot
 id: {{TESTPREFIX}}{{ORGPREFIX}}{{O_SOFTWARE}}
 name: {{O_SOFTWARE_NAME}}
-description: Notepad++ is a free source code editor and Notepad replacement that supports several languages. Running in the MS Windows environment, its use is governed by GPL License.
+description: • Notepad++ is a free text editor optimized for programming, etc. with syntax highlighting for many programming languages and code folding. 
+ • Texteditor optimiert für die Programmierung u.a. mit Syntaxhervorhebung für viele Programmiersprachen und Code-Faltung.
  ___
  Homepage: https://notepad-plus-plus.org/
  Changelog: {{O_SOFTWARE_CHANGES}}
@@ -65,7 +66,7 @@ default: ["no"]
 
 [ProductProperty]
 type: bool
-name: link_desktop
+name: desktop-link
 description: generate or delete Desktop link
 default: False
 

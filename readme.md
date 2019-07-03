@@ -18,6 +18,7 @@
 * [Lizenzen](#lizenzen)
   * [Dieses Paket](#lic_paket)
   * [Notepad++](#lic_notepadpp)
+  * [7zip](#lic_7zip)
   * [psDetail](#lic_psdetail)
   * [GetRealName](lic_getrealname)
 * [Anmerkungen/ToDo](#anmerkungen_todo)
@@ -52,6 +53,10 @@ die Erstellung der Pakete.
 Im Idealfall ist beim Erscheinen einer neuen Release des *Notepad++* lediglich die
 **<code>spec.json</code>** anzupassen.
 
+Vor der Erstellung des gewuenschten Paketes ist ein Druchlauf von
+> <code>make download</code>
+
+erforderlich um die Software beim Anbieter/Entwickler herunterzuladen.
 
 <div id="pystache"></div>
 
@@ -122,19 +127,16 @@ sollen nur noch in <code>spec.json</code> angepasst werden. Den Rest uebernimmt 
 
 ## Installation ##
 
-Die Software selbst wird - sofern bei der Paketerstellung nicht anders vorgegeben - 
-<u>nicht</u> mit diesem Paket vertrieben. Fuer die *"batteries included"*-Pakete 
-entfaellt dieser Abschnitt.
+Die Software selbst wird in der **~dl**-Version (<code> ALLINC=false</code> bei <code>make</code>) 
+<u>nicht</u> mit diesem Paket vertrieben. Fuer die standardmaessig erstellten
+*"batteries included"*-Pakete entfaellt dieser Abschnitt.
 
 Je nach Art des erstellten Paketes erfolgt bei der Installation im Depot durch 
 das <code>postinst</code>-Script der Download der Software vom Hersteller (Windows, 32 und 64 Bit).  
 Ein manueller Download sollte dann nicht erforderlich sein. 
 Auf dem Depot-Server ist **curl** bzw. **wget** erforderlich.
 
-Das Gesamtvolumen der herunterzuladenden Dateien betraegt ca. **20 MByte**.
-
-Es werden in diesem Paket die **INNO**- anstelle der MSI-Versionen der Installer
-verwendet, da letztere bislang keine Anpassung des Zielverzeichnisses erlauben.
+Das Gesamtvolumen der herunterzuladenden Dateien betraegt ca. **8 MByte**.
 
 
 <div id="properties"></div>
@@ -159,7 +161,7 @@ nicht beim Boot/Shutdown, ist es moeglich, dass eine Instanz der Software laueft
 Hiermit ist es moeglich diese Zwangsweise zu beenden. Andernfalls schlaegt die 
 Installation fehl.
 * **<code>language</code>** - Wahl der Sprache des Interface.
-* **<code>link_desktop</code>** - Ermoeglicht das Anlegen einer Desktopverknuepfung.
+* **<code>desktop-link</code>** - Ermoeglicht das Anlegen einer Desktopverknuepfung.
 * **<code>log_level</code>** - Setzt einen alternativen Loglevel fuer das Paket. Fuer
 *Releases* ist der Standardwert 5, fuer *Testpakete* 7.
 * **<code>updater</code>** - Nach Updates suchen und den Nutzer informieren?
@@ -206,9 +208,9 @@ stets fuehrend.
 <div id="unattended_switches"></div>
 
 ### Unattended-Switches ###
-Es handelt sich um ein *INNO*-Setup-Paket mit den hier gebraeuchlichen Parametern.
+Es handelt sich um ein *NSIS*-Setup-Paket mit den hier gebraeuchlichen Parametern.
 
-siehe auch: http://www.jrsoftware.org/isinfo.php
+siehe auch: https://nsis.sourceforge.io/Docs/Chapter3.html#installerusage
 
 
 <div id="lizenzen"></div>
@@ -232,6 +234,13 @@ steht es unter der [**CC BY-SA 3.0**](https://creativecommons.org/licenses/by-sa
 Das verwendete Chameleon Logo wurde original von [Hayes Roberts](http://www.bluebison.net) erstellt.
 Die Variationen fuer das OPSI-Paket wurden von mir unter Verwendung weiterer
 freier Grafiken erstellt
+
+<div id="lic_7zip"></div>
+
+### 7zip ###
+
+Es gilt die Lizenz von [http://www.7-zip.org/license.txt](http://www.7-zip.org/license.txt).  
+Die Lizenz liegt diesem Paket in <code>CLIENT_DATA/bin/</code> ebenfalls bei.
 
 <div id="lic_psdetail"></div>
 
@@ -286,4 +295,4 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2019-07-01 14:59:49 +0200
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2019-07-02 07:53:53 +0200
