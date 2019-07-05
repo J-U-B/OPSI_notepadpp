@@ -75,19 +75,30 @@ endif
 ;-----------------------------------------------------------
 ;*** Images
 ;-----------------------------------------------------------
-if ($isO4I$ = "true")
-	set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_o4i.png"
+if (FileExists("%ScriptPath%\..\lib\icons\%installingProdName%.png"))
+	set $Img_Install$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	set $Img_Install_Custom$        = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Uninstall$             = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Uninstall_Custom$      = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Prepare$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Plugins$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Config$                = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Update$                = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
 else
-	set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install.png"
+	if ($isO4I$ = "true")
+		set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_o4i.png"
+	else
+		set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install.png"
+	endif
+	set $Img_Install_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_custom.png"
+	Set $Img_Uninstall$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall.png"
+	Set $Img_Uninstall_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall_custom.png"
+	Set $Img_Prepare$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_prepare.png"
+	Set $Img_Plugins$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_plugins.png"
+	Set $Img_Config$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_config.png"
+	Set $Img_Update$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_update.png"
 endif
-set $Img_Install_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_custom.png"
-Set $Img_Uninstall$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall.png"
-Set $Img_Uninstall_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall_custom.png"
-Set $Img_Prepare$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_prepare.png"
-Set $Img_Plugins$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_plugins.png"
-Set $Img_Config$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_config.png"
-Set $Img_Update$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_update.png"
-
+	
 comment "preparing..."
 ShowBitmap $Img_Prepare$ $ProductName$
 
