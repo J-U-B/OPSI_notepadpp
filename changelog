@@ -1,3 +1,7 @@
+notepadpp 7.7.1-7:
+	* fixed Nested Switch Statement
+	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 14:36:58 +0200
+
 notepadpp 7.7.1-6:
 	* deferring action if running instance is found (no success/error, keep action_request unchanged)
 	* for language=auto (use sytem language) handle other values than 0409 and 0407 -> defaults to english

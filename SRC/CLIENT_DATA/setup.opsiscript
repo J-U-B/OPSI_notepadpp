@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 10:41:51 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 14:36:07 +0200
 ;======================================================================
 
 ;======================================================================
@@ -109,33 +109,34 @@ else
 	
 	;=== select application language
 	comment "Set application language:"
-	Switch $sw_lang$
-		Case "auto"
-			Switch $System_Language$
-				Case "0407"
-					comment "    detected language: German"
-					Set $LangSourceFile$ = "german.xml"
-				EndCase
-				Case "0409"
-					comment "    detected language: English"
-					Set $LangSourceFile$ = "english.xml"
-				EndCase
-				DefaultCase
-					comment "    detected language code is " + $System_Language$ + "; using default (english)"
-					Set $LangSourceFile$ = "english.xml"
-				EndCase
-			endif
-			EndSwitch
-		EndCase
-		Case "de"
-			comment "    selected language by property: German"
-			Set $LangSourceFile$ = "german.xml"
-		EndCase
-		Case "en"
-			comment "    selected language by property: English"
-			Set $LangSourceFile$ = "english.xml"
-		EndCase
-	EndSwitch
+	if $sw_lang$ = "auto"
+		Switch $System_Language$
+			Case "0407"
+				comment "    detected language: German"
+				Set $LangSourceFile$ = "german.xml"
+			EndCase
+			Case "0409"
+				comment "    detected language: English"
+				Set $LangSourceFile$ = "english.xml"
+			EndCase
+			DefaultCase
+				comment "    detected language code is " + $System_Language$ + "; using default (english)"
+				Set $LangSourceFile$ = "english.xml"
+			EndCase
+		endif
+		EndSwitch
+	else
+		Switch $sw_lang$
+			Case "de"
+				comment "    selected language by property: German"
+				Set $LangSourceFile$ = "german.xml"
+			EndCase
+			Case "en"
+				comment "    selected language by property: English"
+				Set $LangSourceFile$ = "english.xml"
+			EndCase
+		EndSwitch
+	endif
 	comment "    ...selection of 'nativeLang.xml'"
 	Files_copy_lang
 
