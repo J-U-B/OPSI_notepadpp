@@ -1,6 +1,6 @@
 ;===============================================================================
 ; checkinstance.opsiinc
-; J. Boettge <boettge@mpi-halle.mpg.de> 2019-05-21 18:29:50 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-05 10:53:14 +0200
 ;===============================================================================
 
 set $PSDETAIL_opr$ = "-e"
@@ -39,8 +39,11 @@ if FileExists($PSDETAIL$)
 				logWarning "Number of killed instances (" + $Proc_Killed$ + ") does not match expectations (" + $Proc_Cnt$ + ")."
 			endif
 		else
-			logError $Proc_Cnt$+" running instance(s) of " + $MainBin$ + " found, but I'm not allowed to kill them."
-			isFatalError "running instance"
+			; logError $Proc_Cnt$+" running instance(s) of " + $MainBin$ + " found, but I'm not allowed to kill them."
+			; isFatalError "running instance"
+			logWarning $Proc_Cnt$+" running instance(s) of " + $MainBin$ + " found, but I'm not allowed to kill them."
+			comment "DEFERRING ACTION"
+			isSuspended
 		endif
 	else
 		if $Proc_Cnt$ = "0"

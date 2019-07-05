@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOREPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-02 07:52:19 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 13:12:08 +0200
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -13,7 +13,8 @@ Set $Version$         	= getValue("ProductVersion", $MAP$)
 Set $SystemType$      	= GetSystemType
 Set $NTVersion$   		= GetMsVersionInfo
 Set $LanguageMap$ 		= GetLocaleInfoMap
-Set  $System_Language$ 	= lower(getValue("system_default_language_id", $LanguageMap$))
+Set $System_Language$ 	= lower(getValue("system_default_language_id", $LanguageMap$))
+Set $Stage$				= lower("{{STAGE}}")
 
 requiredWinstVersion >= "4.11.6"
 
@@ -43,8 +44,9 @@ endif
 Set $LogLevelDefault$ = GetProductProperty("log_level","default")
 ;-----------------------------------------------------------
 ;*** detect testing package:
-if (strPos($FullProductId$, "0_") = "0") and (strPos($FullProductId$, "test_") = "0")
+if (strPos($FullProductId$, "0_") = "0") and (strPos($FullProductId$, "test_") = "0") and (strPos($Stage$,"test") = "0")
 	; not a testing package
+	comment "INFO: RELEASE package detected"
 	set $ProductId$  	= $FullProductId$ 
 	set $Testing$ 		= "false"
 	if ($LogLevelDefault$ = "default")
@@ -52,8 +54,12 @@ if (strPos($FullProductId$, "0_") = "0") and (strPos($FullProductId$, "test_") =
 	endif
 else
 	; this is a testing package
-	comment "Prefix for testing package detected"
-	set $ProductId$  		= strPart($FullProductId$, calculate(strPos($FullProductId$,"_") + "+1"), strLength($FullProductId$))
+	comment "INFO: TESTING package detected"
+	if (strPos($FullProductId$, "0_") = "0") and (strPos($FullProductId$, "test_") = "0")
+		set $ProductId$	= $FullProductId$
+	else
+		set $ProductId$	= strPart($FullProductId$, calculate(strPos($FullProductId$,"_") + "+1"), strLength($FullProductId$))
+	endif
 	set $Testing$ 		= "true"
 	if ($LogLevelDefault$ = "default")
 		set $LogLevelDefault$  	= "{{DEFAULT_TESTING_LOGLEVEL}}"

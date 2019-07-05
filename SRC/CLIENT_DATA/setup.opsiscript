@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-03 13:37:52 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 10:41:51 +0200
 ;======================================================================
 
 ;======================================================================
@@ -111,14 +111,21 @@ else
 	comment "Set application language:"
 	Switch $sw_lang$
 		Case "auto"
-			if $system_language$ = "0407"
-				comment "    detected language: German"
-				Set $LangSourceFile$ = "german.xml"
+			Switch $System_Language$
+				Case "0407"
+					comment "    detected language: German"
+					Set $LangSourceFile$ = "german.xml"
+				EndCase
+				Case "0409"
+					comment "    detected language: English"
+					Set $LangSourceFile$ = "english.xml"
+				EndCase
+				DefaultCase
+					comment "    detected language code is " + $System_Language$ + "; using default (english)"
+					Set $LangSourceFile$ = "english.xml"
+				EndCase
 			endif
-			if $system_language$ = "0409"
-				comment "    detected language: English"
-				Set $LangSourceFile$ = "english.xml"
-			endif
+			EndSwitch
 		EndCase
 		Case "de"
 			comment "    selected language by property: German"

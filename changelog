@@ -1,6 +1,13 @@
-notepadpp (7.7.1-5)
+notepadpp 7.7.1-6:
+	* deferring action if running instance is found (no success/error, keep action_request unchanged)
+	* for language=auto (use sytem language) handle other values than 0409 and 0407 -> defaults to english
+	* detect testing stage even if package has no matching prefix
+	* for distinction: explicit comment in logs for TESTING / RELEASE package
+	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 13:13:20 +0200
+
+notepadpp 7.7.1-5:
 	* Reaktivierung Feature lokales Logo (gem. o4i-Richtlinie)
- -- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 05.07.2019
+	-- Thomas Besser (archIT/KIT) <thomas.besser@kit.edu>, 05.07.2019
 
 notepadpp 7.7.1-4:
 	* variable $PathToExe$ is back
