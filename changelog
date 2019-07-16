@@ -1,3 +1,13 @@
+notepadpp 7.7.1-9:
+	* for 32 bit compatibility: use %ProgramFiles32Dir% instead of EnvVar
+	* avoid empty start menu folder
+	-- J. Boettge <boettge@mpi-halle.mpg.de> / Michael Decker  2019-07-16 14:22:34 +0200
+
+notepadpp 7.7.1-8:
+	* fixed setting loglevel
+	* fixed search registry for uninstall keys on 32 bit systems
+	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-15 15:28:46 +0200
+
 notepadpp 7.7.1-7:
 	* fixed Nested Switch Statement
 	-- J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 14:36:58 +0200

@@ -1,7 +1,7 @@
 ;=====================================================================
-; product specific variables NOREPAD++
+; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 13:12:08 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-15 16:05:39 +0200
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -65,7 +65,7 @@ else
 		set $LogLevelDefault$  	= "{{DEFAULT_TESTING_LOGLEVEL}}"
 	endif
 endif
-setlogLevel = $LogLevelDefault$
+setlogLevel  = $LogLevelDefault$
 
 ;-----------------------------------------------------------
 ;*** detect O4I/DFN package:
@@ -177,7 +177,6 @@ set $SEVENZIP$				= "%ScriptPath%\bin\7z.exe"
 ;-----------------------------------------------------------
 ;*** misc settings
 ;-----------------------------------------------------------
-setlogLevel 				= $LogLvl$
 set $Kill_Running$ 			= GetProductProperty("kill_running", "False")
 
 Set $RegPathUninstall64$ 	= "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"

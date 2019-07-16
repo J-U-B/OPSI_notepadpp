@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 14:36:07 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-16 14:21:39 +0200
 ;======================================================================
 
 ;======================================================================
@@ -103,7 +103,9 @@ else
 
 
 	;=== Create entries in start menu
-	LinkFolder_clear_StartMenuLinks
+	if (FileExists("%CommonProgramsDir%\" + $ProductName$))
+		LinkFolder_clear_StartMenuLinks
+	endif
 	;LinkFolder_create_StartMenuLinks
 	
 	

@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-02 07:27:09 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-16 14:32:18 +0200
 ;=====================================================================
 
 
@@ -161,6 +161,9 @@ sub_checkinstance
 
 ;=== run uninstaller
 LinkFolder_RemoveDesktopLink
+if (FileExists("%CommonProgramsDir%\" + $ProductName$))
+	LinkFolder_RemoveStartMenuLinks
+endif
 if ( not($isMSI$="1") and not(strpos($UninstallString$,'"')="1") and not(strpos($UninstallString$,' ')="0") )
 	set $UninstallString$ = '"' + $UninstallString$ + '"'
 endif
@@ -180,11 +183,11 @@ endif
 
 if ($ExitCode$ = "0") and not ($Uninst_RegDir$ = "")
 	;=== does the installation directory still exist?
-		if (FileExists($Uninst_RegDir$))
-			comment "INFO: Install directory still exists: [" + $Uninst_RegDir$ + "]. Trying to delete."
-			;=== try final cleanup
-			Files_del_InstallDir
-		endif
+	if (FileExists($Uninst_RegDir$))
+		comment "INFO: Install directory still exists: [" + $Uninst_RegDir$ + "]. Trying to delete."
+		;=== try final cleanup
+		Files_del_InstallDir
+	endif
 endif	
 
 
@@ -211,7 +214,6 @@ $UninstallString$  $Uninst_Opts$ _?=$Uninst_RegDir$
 ;======================================================================
 delete -sfc "$Uninst_RegDir$"
 
-
 ;=====================================================================
 [LinkFolder_RemoveDesktopLink]
 ;=====================================================================
@@ -219,6 +221,12 @@ set_basefolder common_desktopdirectory
 set_subfolder ""
 delete_element $ProductName$
 
+;=====================================================================
+[LinkFolder_RemoveStartMenuLinks]
+;=====================================================================
+set_basefolder common_programs
+set_subfolder ""
+delete_subfolder "$ProductName$"
 
 ;======================================================================
 [sub_check_Exitcode]
@@ -227,7 +235,6 @@ set $ExitCode$ = getLastExitCode
 if not ($ExitCode$ = "0")
 	logWarning "Last operation returned exitcode " + $ExitCode$
 endif
-
 
 ;======================================================================
 [sub_check_PathVar]
