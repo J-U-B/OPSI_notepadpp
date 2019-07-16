@@ -135,7 +135,7 @@ if ($sw_arch$ = "64")
 	set $InstallBase$ = "%ProgramFiles64Dir%"
 else
 	; 32 bit software
-	set $InstallBase$ = EnvVar("ProgramFiles(x86)")
+	set $InstallBase$ = "%ProgramFiles32Dir%"
 endif
 
 if ($SystemType$="x86 System") and ($sw_arch$="64")
