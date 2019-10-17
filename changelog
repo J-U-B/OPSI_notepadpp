@@ -1,3 +1,9 @@
+notepadpp 7.8-10:
+	* product update --> 7.8
+	* adjusted downloader for new project website
+	* updated libLocalFunctions (helpers.opsiinc)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2019-10-17 08:05:46 +0200
+
 notepadpp 7.7.1-9:
 	* for 32 bit compatibility: use %ProgramFiles32Dir% instead of EnvVar
 	* avoid empty start menu folder

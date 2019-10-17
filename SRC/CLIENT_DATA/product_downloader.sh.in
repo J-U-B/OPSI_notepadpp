@@ -3,13 +3,16 @@
 # Download files from vendor
 # Product: NOTEPAD++
 #
-# Version 1.3.1
-# Jens Boettge <boettge@mpi-halle.mpg.de>  2019-05-21 14:45:56 +0200
+# Version 1.3.2
+# Jens Boettge <boettge@mpi-halle.mpg.de>  2019-10-16 16:39:35 +0200
 #=======================================================================
 # link examples:
 # https://notepad-plus-plus.org/download
 # 	https://notepad-plus-plus.org/repository/7.x/7.7/npp.7.7.Installer.x64.exe
 #	https://notepad-plus-plus.org/repository/7.x/7.7/npp.7.7.Installer.exe
+# new server since Oct. 2019:
+#	https://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe
+#	https://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.exe
 #=======================================================================
 
 ERR=0
@@ -31,7 +34,7 @@ if [ "$DOWNLOADER" = "curl" ]; then
 	CURL=$(which curl)
 	if [ -z "$CURL" ];   then echo "Error: curl not found" ;  exit 202 ; fi
 	#options for curl:
-	DL_OPTS="--silent --show-error -L "
+	DL_OPTS="--silent --show-error -L -k "
 	DL_OUT="-o"
 fi
 
@@ -61,7 +64,8 @@ fi
 #	exit $ERR
 #fi
 
-BASE="https://notepad-plus-plus.org/repository/${MAJOR}.x/$VERSION/npp.${VERSION}.Installer%%WARCH%%.exe"
+#BASE="https://notepad-plus-plus.org/repository/${MAJOR}.x/$VERSION/npp.${VERSION}.Installer%%WARCH%%.exe"
+BASE="http://download.notepad-plus-plus.org/repository/${MAJOR}.x/$VERSION/npp.${VERSION}.Installer%%WARCH%%.exe"
 PKG_FILE="${PROD}-${VERSION}-x%%ARCH%%.exe"
 
 # in postinst: DEST_DIR=DST="${CLIENT_DATA_DIR}/files"
