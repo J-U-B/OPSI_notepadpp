@@ -4,7 +4,7 @@
 ; This file contains all possible variables, excluding the opsi-system
 ; variables, for the opsi-winst scripts in use.
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-05 11:01:09 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-10-29 15:20:54 +0100
 ;=====================================================================
 DefStringList $LanguageMap$
 DefStringList $MAP$
@@ -21,6 +21,7 @@ DefVar $ErrorMsg$
 DefVar $ExitCode$
 DefVar $FullProductId$
 DefVar $Img_Config$
+defVar $Img_Defer$
 DefVar $Img_Install$
 DefVar $Img_Install_Custom$
 DefVar $Img_Uninstall$

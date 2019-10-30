@@ -1,3 +1,10 @@
+notepadpp 7.8.1-11:
+	* product update --> 7.8.1
+	* set ActionProgess on depot server if deferring action (o4i-git issue #13)
+	* package icon for deferring ($Img_Defer$)
+	* helpers.opsifunc to v1.5
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2019-10-29 15:45:42 +0100
+
 notepadpp 7.8-10:
 	* product update --> 7.8
 	* adjusted downloader for new project website

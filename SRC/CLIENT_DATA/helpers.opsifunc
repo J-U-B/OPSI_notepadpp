@@ -3,15 +3,18 @@
 ; 
 ; Some general helper functions...
 ;
-; Version: 	v1.4
+; Version: 	v1.5
 ; Author : 	J. Boettge <boettge@mpi-halle.mpg.de>
-; Date   :	2019-07-08 16:32:04 +0200
+; Date   :	2019-10-23 15:09:53 +0200
 ;==========================================================================
 ; Changelog
 ; ---------
+; v1.5
+; * fixed valid actions for productSetActionRequest
+;
 ; v1.4
 ; * added function currentProductSetReport
-
+;
 ; v1.3
 ; * added function productVerGetOnClient
 ; * added function removeProductVerOnClientStatus
@@ -223,7 +226,7 @@ DefFunc productSetActionRequest(val $prodId$:string, val $actRequest$: string) :
 	DefStringList $outStream$
 	DefVar $ValidActions$
 	set $actRequest$ = lower($actRequest$)
-	set $ValidActions$ = "||setup|update|uninstall|always|once|always|custom|"
+	set $ValidActions$ = "|setup|update|uninstall|always|once|always|custom|none|"
 	if contains($ValidActions$, "|"+$actRequest$+"|")
 		set $outStream$ = getReturnListFromSection("opsiServiceCall_setActionRequest")
 		set $result$ = takeString("0", $outStream$)

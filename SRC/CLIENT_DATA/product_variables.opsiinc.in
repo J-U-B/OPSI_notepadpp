@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-10-17 08:05:25 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2019-10-29 15:44:47 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -82,27 +82,29 @@ endif
 ;*** Images
 ;-----------------------------------------------------------
 if (FileExists("%ScriptPath%\..\lib\icons\%installingProdName%.png"))
-	set $Img_Install$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	set $Img_Install_Custom$        = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Uninstall$             = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Uninstall_Custom$      = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Prepare$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Plugins$               = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Config$                = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
-	Set $Img_Update$                = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	set $Img_Install$           = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	set $Img_Install_Custom$    = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Uninstall$         = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Uninstall_Custom$  = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Prepare$           = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Plugins$           = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Config$            = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Update$            = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
+	Set $Img_Defer$             = "%ScriptPath%\..\lib\icons\%installingProdName%.png"
 else
 	if ($isO4I$ = "true")
 		set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_o4i.png"
 	else
 		set $Img_Install$		= "%ScriptPath%\images\" + $StrippedProductId$ + "_install.png"
 	endif
-	set $Img_Install_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_install_custom.png"
-	Set $Img_Uninstall$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall.png"
-	Set $Img_Uninstall_Custom$	= "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall_custom.png"
-	Set $Img_Prepare$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_prepare.png"
-	Set $Img_Plugins$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_plugins.png"
-	Set $Img_Config$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_config.png"
-	Set $Img_Update$			= "%ScriptPath%\images\" + $StrippedProductId$ + "_update.png"
+	set $Img_Install_Custom$    = "%ScriptPath%\images\" + $StrippedProductId$ + "_install_custom.png"
+	Set $Img_Uninstall$         = "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall.png"
+	Set $Img_Uninstall_Custom$  = "%ScriptPath%\images\" + $StrippedProductId$ + "_uninstall_custom.png"
+	Set $Img_Prepare$           = "%ScriptPath%\images\" + $StrippedProductId$ + "_prepare.png"
+	Set $Img_Plugins$           = "%ScriptPath%\images\" + $StrippedProductId$ + "_plugins.png"
+	Set $Img_Config$            = "%ScriptPath%\images\" + $StrippedProductId$ + "_config.png"
+	Set $Img_Update$            = "%ScriptPath%\images\" + $StrippedProductId$ + "_update.png"
+	Set $Img_Defer$             = "%ScriptPath%\images\" + $StrippedProductId$ + "_defer.png"
 endif
 	
 comment "preparing..."
