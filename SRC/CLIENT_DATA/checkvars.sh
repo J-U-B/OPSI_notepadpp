@@ -8,10 +8,10 @@
 #		unused but defined variables
 #
 # Version: 1.0.2
-# Jens Boettge <boettge@mpi-halle.mpg.de>  	2018-09-18 08:53:49 +0200
+# Jens Boettge <boettge@mpi-halle.mpg.de>  	2020-02-07 08:13:23 +0100
 #===========================================================
 
-VARS_DEFINED=$(grep -i -P -e '^\s*def(Var|StringList)' variables.opsiinc  | sed -e 's/^\s+//' -e 's/\s+/ /g' | awk -e '{print $2}' | sort )
+VARS_DEFINED=$(grep -i -P -e '^\s*def(Var|StringList)' variables.opsiinc checkinstance.opsiinc | sed -e 's/^\s+//' -e 's/\s+/ /g' | awk -e '{print $2}' | sort )
 VARS_USED=$(cat *.opsi{inc,script}{,.in} 2>/dev/null| grep -v '^\s*;' | grep -i 'set\s*\$' | sed -e 's/^\s*//' | sed -e 's/\t/ /' | cut -f 2 -d " " | sort | uniq)
 
 echo "==============================="

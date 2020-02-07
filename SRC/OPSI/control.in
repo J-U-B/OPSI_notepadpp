@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2019-07-03 13:36:59 +0200           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2020-02-06 13:10:08 +0100           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -59,9 +59,15 @@ type: unicode
 name: updater
 multivalue: False
 editable: False
-description: look for updates and inform user?
+description: Look for updates and inform user? If disabled also the "Plugin Admin" won't work.
 values: ["no", "yes"]
 default: ["no"]
+
+[ProductProperty]
+type: bool
+name: keep_plugins
+description: Keep installed (non-standard) plugins on update
+default: True
 
 [ProductProperty]
 type: bool

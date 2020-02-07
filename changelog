@@ -1,3 +1,10 @@
+notepadpp 7.8.4-14 testing:
+	* keep installed plugins on update (new property keep_plugins)
+	* removed unneeded code for patching XML config file
+	* checkinstance revised (v1.3)
+	* announce replacement of dfn_notepadpp by o4i_notepadpp (stage 1)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-02-07 12:03:26 +0100
+
 notepadpp 7.8.4-13:
 	* product_downloader: modified detection of curl/wget
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-02-06 12:45:26 +0100

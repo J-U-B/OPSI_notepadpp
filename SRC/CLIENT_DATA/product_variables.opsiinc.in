@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-10-29 15:44:47 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 08:52:51 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -10,6 +10,7 @@ Set $MAP$ 				= getProductMap
 Set $FullProductId$   	= getValue("id", $MAP$)
 Set $ProductName$     	= getValue("name", $MAP$)
 Set $Version$         	= getValue("ProductVersion", $MAP$)
+Set $ActionRequest$     = getValue("actionrequest", $MAP$)
 Set $SystemType$      	= GetSystemType
 Set $NTVersion$   		= GetMsVersionInfo
 Set $LanguageMap$ 		= GetLocaleInfoMap
@@ -76,6 +77,13 @@ if (strPos($FullProductId$, "o4i_") = "0") AND (strPos($FullProductId$, "dfn_") 
 else
 	set $isO4I$ = "true"
 	set $StrippedProductId$ = strPart($ProductId$,"5",strLength($ProductId$))
+endif
+
+; required for full change from dfn_ to o4i_:
+if (strPos($FullProductId$, "dfn_") = "0")
+	set $isDFN$ = "false"
+else
+	set $isDFN$ = "true"
 endif
 
 ;-----------------------------------------------------------
@@ -156,46 +164,55 @@ Set $sw_lang$ 				= GetProductProperty("language","auto")
 Set $pr_Updater$ 			= GetProductProperty("updater","no")
 
 ;-----------------------------------------------------------
+;*** property: keep_plugins - bool
+;-----------------------------------------------------------
+Set $pr_KeepPlugins$ 		= GetProductProperty("keep_plugins","True")
+
+;-----------------------------------------------------------
 ;*** property: create desktop/startmenu/quickstart link?
 ;-----------------------------------------------------------
-Set $pr_DesktopLink$ 		= GetProductProperty("desktop-link","False")
+Set $pr_DesktopLink$        = GetProductProperty("desktop-link","False")
 
 ;-----------------------------------------------------------
 ;*** properties: post install/uninstall
 ;-----------------------------------------------------------
-set $CustomPostInstall$ 	= getProductProperty("custom-post-install","none")
-set $CustomPostUninstall$ 	= getProductProperty("custom-post-deinstall","none")
+set $CustomPostInstall$     = getProductProperty("custom-post-install","none")
+set $CustomPostUninstall$   = getProductProperty("custom-post-deinstall","none")
 
 ;-----------------------------------------------------------
 ;*** select PSDETAIL:
-set $PSDETAIL$ 			= "%ScriptPath%\bin\psdetail.exe"
+set $PSDETAIL$              = "%ScriptPath%\bin\psdetail.exe"
 if (CompareDotSeparatedNumbers($NTVersion$, ">=", "10.0"))
-	set $PSDETAIL$ 			= "%ScriptPath%\bin\psdetail4.exe"
+	set $PSDETAIL$          = "%ScriptPath%\bin\psdetail4.exe"
 endif
-set $PSDETAIL_mod$			= ""
 
-set $SEVENZIP$				= "%ScriptPath%\bin\7z.exe"
+set $SEVENZIP$              = "%ScriptPath%\bin\7z.exe"
+
+set $PSDETAIL$              = "%ScriptPath%\bin\psdetail.exe"
+if (CompareDotSeparatedNumbers($NTVersion$, ">=", "10.0"))
+	set $PSDETAIL$          = "%ScriptPath%\bin\psdetail4.exe"
+endif
 
 ;-----------------------------------------------------------
 ;*** misc settings
 ;-----------------------------------------------------------
-set $Kill_Running$ 			= GetProductProperty("kill_running", "False")
+set $Kill_Running$          = GetProductProperty("kill_running", "False")
 
-Set $RegPathUninstall64$ 	= "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-Set $RegPathUninstall32$ 	= "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
+Set $RegPathUninstall64$    = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+Set $RegPathUninstall32$    = "HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall"
 
 
 ;-------------------------------------------------------
 ; filter for opsiServiceCall productOnClient_getObjects:
 ;-------------------------------------------------------
-set $ProductFilter$	= "*notepadpp"
-set $ProductVersionFilter$ = "*"
+set $ProductFilter$	        = "*notepadpp"
+set $ProductVersionFilter$  = "*"
 
 
 ;-----------------------------------------------------------
 ;*** specific settings
 ;-----------------------------------------------------------
-Set $InstallerType$   	= "NSIS"
+Set $InstallerType$     = "NSIS"
 ;include_append "%ScriptPath%\exitcode_inno.opsiinc"
 ;include_append "%ScriptPath%\exitcode_msi.opsiinc"
 include_append "%ScriptPath%\exitcode_nsis.opsiinc"
@@ -204,28 +221,31 @@ include_append "%ScriptPath%\exitcode_nsis.opsiinc"
 ;    notepadpp-7.7-x32.exe
 ;    notepadpp-7.7-x64.exe
 
-;Set $Installer$		= "%ScriptPath%\files\" + $StrippedProductId$ + "-{{O_SOFTWARE_VER}}-{{O_SOFTWARE_BUILD}}-" + $sw_arch$ + "bit"+ ".exe"
-Set $Installer$		  	= "%ScriptPath%\files\" + $StrippedProductId$ + "-{{O_SOFTWARE_VER}}-x" + $sw_arch$ + ".exe"
-;Set $InstallDir$      	= $InstallBase$ + "\" + stringReplace($ProductName$," ", "") + "\"
-;Set $InstallDir$      	= $InstallBase$ + "\" + $ProductName$ + "\"
-Set $InstallDir$      	= $InstallBase$ + "\" + $StrippedProductId$ + "\"
-Set $LocaleDir$			= $InstallDir$ + "localization"
-Set $MinimumSpace$    	= "30 MB"
-;Set $CheckBin$       	= $StrippedProductId$ + ".exe"
-Set $CheckBin$       	= "notepad++.exe"
+;Set $Installer$        = "%ScriptPath%\files\" + $StrippedProductId$ + "-{{O_SOFTWARE_VER}}-{{O_SOFTWARE_BUILD}}-" + $sw_arch$ + "bit"+ ".exe"
+Set $Installer$	        = "%ScriptPath%\files\" + $StrippedProductId$ + "-{{O_SOFTWARE_VER}}-x" + $sw_arch$ + ".exe"
+;Set $InstallDir$       = $InstallBase$ + "\" + stringReplace($ProductName$," ", "") + "\"
+;Set $InstallDir$       = $InstallBase$ + "\" + $ProductName$ + "\"
+Set $InstallDir$        = $InstallBase$ + "\" + $StrippedProductId$ + "\"
+Set $LocaleDir$	        = $InstallDir$ + "localization\"
+Set $PluginDir$	        = $InstallDir$ + "plugins\"
+Set $MinimumSpace$      = "30 MB"
+;Set $CheckBin$         = $StrippedProductId$ + ".exe"
+Set $CheckBin$          = "notepad++.exe"
 Set	$DefaultXML$        = $StrippedProductId$ + ".xml"
-Set $PathToExe$			= $InstallDir$ + $CheckBin$
+Set $PathToExe$         = $InstallDir$ + $CheckBin$
+Set $TmpDir$            = "%opsiTmpDir%\" + $StrippedProductId$ + ".tmp\"
+Set $LogDir$            = "%SystemDrive%\tmp"
+Set $Inst_Log$          = $LogDir$ + "\"+$ProductId$+"_install.log"
+Set $Uninst_Log$        = $LogDir$ + "\"+$ProductId$+"_uninstall.log"
 
-Set $LogDir$			= "%SystemDrive%\tmp"
-Set $Inst_Log$			= $LogDir$ + "\"+$ProductId$+"_install.log"
-Set $Uninst_Log$		= $LogDir$ + "\"+$ProductId$+"_uninstall.log"
+Set $PluginsExclude$    = createStringList("Config", "mimeTools", "NppConverter", "NppExport")
 
-;Set $SearchPattern$ 	= $ProductName$
-;Set $Uninst_ID_std$	= $ProductName$
-Set $SearchPattern$ 	= "Notepad++"
-Set $Uninst_ID_std$		= "Notepad++"
-Set $Uninst_Prg$       	= "uninstall.exe"
-Set $Uninstaller$	   	= $InstallDir$ + $Uninst_Prg$
+;Set $SearchPattern$    = $ProductName$
+;Set $Uninst_ID_std$    = $ProductName$
+Set $SearchPattern$     = "Notepad++"
+Set $Uninst_ID_std$     = "Notepad++"
+Set $Uninst_Prg$        = "uninstall.exe"
+Set $Uninstaller$       = $InstallDir$ + $Uninst_Prg$
 ; ...oder UninstallString aus Registry
 
 ;=== INNO ===
@@ -233,11 +253,11 @@ Set $INNO_Inst_Opts$    = '/SP- /SILENT /NOCANCEL /NORESTART /CLOSEAPPLICATIONS 
 Set $INNO_Uninst_Opts$  = '/SILENT /NORESTART /LOG="'+ $Uninst_Log$ +'"'
 
 ;=== MSI === (not used for installation here)
-Set $MSI_Inst_Opts$ 	= '/qb-! /norestart /l+* "' + $Inst_Log$ +'" INSTALLDIR="' + $InstallDir$ + '" REBOOT=ReallySuppress ALLUSERS=1'
-Set $MSI_Uninst_Opts$  	= '/qb-! /norestart /l+* "' + $Uninst_Log$ + '" REBOOT=ReallySuppress'
-Set $MSI_Inst_Cmd$		= 'msiexec /i "' + $Installer$ +'" ' + $Inst_Opts$
-Set $MSI_Uninst_Cmd$ 	= "msiexec /x $ProductKey$ " + $Uninst_Opts$
+Set $MSI_Inst_Opts$     = '/qb-! /norestart /l+* "' + $Inst_Log$ +'" INSTALLDIR="' + $InstallDir$ + '" REBOOT=ReallySuppress ALLUSERS=1'
+Set $MSI_Uninst_Opts$   = '/qb-! /norestart /l+* "' + $Uninst_Log$ + '" REBOOT=ReallySuppress'
+Set $MSI_Inst_Cmd$      = 'msiexec /i "' + $Installer$ +'" ' + $Inst_Opts$
+Set $MSI_Uninst_Cmd$    = "msiexec /x $ProductKey$ " + $Uninst_Opts$
 
 ;=== NSIS === (not used here)
-Set $NSIS_Inst_Opts$  	= "/S  /D=" + $InstallDir$
-Set $NSIS_Uninst_Opts$	= "/S"
+Set $NSIS_Inst_Opts$    = "/S  /D=" + $InstallDir$
+Set $NSIS_Uninst_Opts$  = "/S"

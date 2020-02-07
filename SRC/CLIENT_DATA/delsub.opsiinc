@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-16 14:32:18 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 12:02:15 +0100
 ;=====================================================================
 
 
@@ -15,6 +15,7 @@ marktime
 
 if FileExists("%ScriptPath%\checkinstance.opsiinc")
 	include_append "%ScriptPath%\checkinstance.opsiinc"
+	sub_checkinstance_init
 else
 	isFatalError "File not found: checkinstance.opsiinc"
 endif
@@ -94,7 +95,7 @@ if ($UninstallString$ = "")
 else
 	comment "Start uninstall sub section for " + $Inst_Ver$ + " (" + $Uninst_Arch$ + ")"
 	
-	if not ($RegInno$="")
+	if not ($RegInno$ = "")
 			comment "Detected previous INNO setup " + $RegInno$
 			set $isINNO$ = "1"
 			set $Uninst_Opts$ = $INNO_Uninst_Opts$
@@ -108,7 +109,7 @@ else
 	else
 		set $isINNO$ = "0"
 		if ( strpos(lower($UninstallString$),"msiexec") = "1" )
-			set $isMSI$="1"
+			set $isMSI$ = "1"
 			comment "Detected previous MSI setup"
 			set $Uninst_Opts$ = $MSI_Uninst_Opts$
 			Sub_Uninstall
@@ -150,29 +151,55 @@ endif
 
 ;=== check for running binaries
 ;...the application:
-set $MainBin$ = $Uninst_RegDir$ + $CheckBin$
+set $CheckProcess$ = $Uninst_RegDir$ + $CheckBin$
 ;
 ; workaround for escape problem of the "+" character:
 ; note: this is less accurate!
-set $MainBin$ = stringreplace($MainBin$, "+", "%")
-
-set $PSDETAIL_mod$ = ""
+set $CheckProcess$ = stringreplace($CheckProcess$, "+", "%")
+set $Kill_Override$ = "false"
+set $PSDETAIL_MODE$ = ""
 sub_checkinstance
+
+;=== save plugins for restore if requested
+if ($ActionRequest$="setup") and ($pr_KeepPlugins$= "True")
+	if FileExists($pluginDir$)
+		Set $Plugins$ = shellCall('dir "' + $pluginDir$ + '" /b /a:d')
+		; cleanup result list
+		for %x% in $PluginsExclude$ do set $Plugins$ = removeFromListByMatch("%x%", $Plugins$)
+		set $plugin_count$ = count($Plugins$)
+		if ($plugin_count$ INT> "0")
+			Message "Saving installed plugins..."
+			if FileExists($TmpDir$)
+				logWarning "Temp directory already exists. Cleaning up."
+				files_deleteTemp
+				if FileExists($TmpDir$)
+					logWarning "Temp directory still exists!"
+				endif
+			endif
+			; copy plugin subdirs
+			for %x% in $Plugins$ do files_copyPlugin
+		else
+			Comment "Plugin directory contains only default plugins. Nothing to do."
+		endif
+	else
+		logWarning "Plugin directory does not exist"
+	endif
+endif
 
 ;=== run uninstaller
 LinkFolder_RemoveDesktopLink
 if (FileExists("%CommonProgramsDir%\" + $ProductName$))
 	LinkFolder_RemoveStartMenuLinks
 endif
-if ( not($isMSI$="1") and not(strpos($UninstallString$,'"')="1") and not(strpos($UninstallString$,' ')="0") )
+if ( not($isMSI$ = "1") and not(strpos($UninstallString$,'"')="1") and not(strpos($UninstallString$,' ')="0") )
 	set $UninstallString$ = '"' + $UninstallString$ + '"'
 endif
 
-if ($isINNO$="1")
+if ($isINNO$ = "1")
 		Winbatch_Uninstall_inno
 		sub_check_exitcode_inno
 else
-	if ($isMSI$="1")
+	if ($isMSI$ = "1")
 		Winbatch_Uninstall_msi
 		sub_check_exitcode_msi
 	else
@@ -246,5 +273,13 @@ else
 	set $Uninst_RegDir$ = stringReplace(lower($Inst_Loc$) + "\", "\\", "\")
 endif
 
+;======================================================================
+[files_deleteTemp]
+;======================================================================
+del -sf "$TmpDir$"
 
+;======================================================================
+[files_copyPlugin]
+;======================================================================
+copy  -se "$pluginDir$%x%\" "$TmpDir$%x%"
 

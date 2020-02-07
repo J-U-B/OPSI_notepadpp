@@ -4,14 +4,21 @@
 ; This file contains all possible variables, excluding the opsi-system
 ; variables, for the opsi-winst scripts in use.
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-10-29 15:20:54 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 08:50:55 +0100
 ;=====================================================================
 DefStringList $LanguageMap$
 DefStringList $MAP$
 DefStringList $ResultList$
 DefStringList $TempList$
+DefStringList $Plugins$
+DefStringList $PluginsExclude$
+DefStringList $PluginsTarget$
 
+DefVar $ActionRequest$
+DefVar $bCheckInstance$
+DefVar $bPSDetail$
 DefVar $CheckBin$
+DefVar $CheckProcess$
 DefVar $currentLogLevel$
 DefVar $CustomPostInstall$
 DefVar $CustomPostUninstall$
@@ -31,6 +38,7 @@ DefVar $Img_Plugins$
 DefVar $Img_Update$	
 DefVar $InstallBase$
 DefVar $InstallDir$
+DefVar $InstallDirTmp$
 DefVar $Installer$
 DefVar $InstallerType$
 DefVar $Inst_Cmd$
@@ -42,6 +50,7 @@ DefVar $isINNO$
 DefVar $isMSI$
 DefVar $isNSIS$
 DefVar $isO4I$
+DefVar $isDFN$
 DefVar $LangSourceFile$
 DefVar $LocaleDir$
 DefVar $LogDir$
@@ -50,6 +59,9 @@ DefVar $MainBin$
 DefVar $MinimumSpace$
 DefVar $NTVersion$
 DefVar $PathToExe$
+defVar $plugin_count$
+defVar $plugin_count_target$
+DefVar $PluginDir$
 DefVar $ProductId$
 DefVar $ProductName$
 DefVar $ProductFilter$
@@ -71,6 +83,7 @@ DefVar $sw_lang$
 DefVar $System_Language$
 DefVar $SystemType$
 DefVar $Testing$
+DefVar $TmpDir$
 DefVar $TimeDiff$
 DefVar $Uninstaller$
 DefVar $UninstallString$
@@ -101,12 +114,13 @@ DefVar $NSIS_Uninst_Cmd$
 
 ; Properties:
 DefVar $pr_DesktopLink$
+DefVar $pr_KeepPlugins$
 DefVar $pr_Updater$
 
 ; Variables for checkinstance:
 DefVar $Proc_Cnt$
 DefVar $Proc_Killed$
 DefVar $PSDETAIL$
-DefVar $PSDETAIL_mod$
-DefVar $PSDETAIL_opr$
+DefVar $PSDETAIL_MODE$
 DefVar $Kill_Running$
+DefVar $Kill_Override$

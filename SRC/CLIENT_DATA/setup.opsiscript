@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2019-07-16 14:21:39 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 10:34:25 +0100
 ;======================================================================
 
 ;======================================================================
@@ -142,14 +142,36 @@ else
 	comment "    ...selection of 'nativeLang.xml'"
 	Files_copy_lang
 
+	;=== restore plugins if required
+	if ($ActionRequest$="setup") and ($pr_KeepPlugins$= "True")
+		if FileExists($TmpDir$) and ($plugin_count$ INT> "0")
+			Message "Restoring installed plugins..."
+			if FileExists($PluginDir$)
+				; copy plugins:
+				for %x% in $Plugins$ do sub_restore_plugin
+				; checking targets:
+				Set $PluginsTarget$ = shellCall('dir "' + $PluginDir$ + '" /b /a:d')
+				set $PluginsTarget$ = getSubListByMatch ($Plugins$, $PluginsTarget$)
+				set $plugin_count_target$ = count($PluginsTarget$)
+				if ($plugin_count_target$ = $plugin_count$)
+					comment "All plugins copied. Removing temporary folder"
+					; defined in delsub.opsiinc:
+					files_deleteTemp
+				else
+					logError "Found " + $plugin_count_target$ + " copied plugin directories. " + $plugin_count$ + " were expected."
+				endif
+			else
+				logError "Target directory for plugins does not exist. Skipping restore."
+			endif
+		else
+			Comment "No saved plugins found. Nothing to do."
+		endif
+
+	endif
+
 	;=== use updater?
 	if ($pr_Updater$ = "no")
 		comment "Disable auto update:"
-		
-		; patch XML in installdir to prohibit search for updates
-		comment "    Patching XML config file"
-		XMLPatch_config $InstallDir$ + "\config.model.xml"
-		
 		; delete directory 'updater' to remove menu entries under "Help"
 		comment "   Remove updater directory"
 		Files_uninstall_updater
@@ -169,6 +191,21 @@ else
 	set $TimeDiff$ = getDiffTimeSec
 	Message  "Setup time: " + $TimeDiff$ + " seconds"	
 	
+	
+	;=== Prepare the change from dfn_ to o4i_
+	; Stage 1 - logWarnining
+	; Stage 2 - logError (entire functionality)
+	; Stage 3 - logError (NO functionality)
+	; Stage 4 - removal off all dfn_ related code form this source
+	;-----------------------------------------
+	if $isDFN$ = "true"
+		logWarning "*******************************************************************************************"
+		logWarning "This package will not be maintained any longer and will be removed from the repository in"
+		logWarning "the near future. The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
+		logWarning "Please install o4i_" + $StrippedProductId$ + " from the repository."
+		logWarning "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
+		logWarning "*******************************************************************************************"	
+	endif	
 endif
 
  
@@ -241,8 +278,8 @@ end_link
 ;=====================================================================
 [Files_copy_lang]
 ;=====================================================================
-copy "$InstallDir$\localization\$LangSourceFile$" "$InstallDir$"
-move "$InstallDir$\$LangSourceFile$" "$InstallDir$\nativeLang.xml"
+copy "$LocaleDir$$LangSourceFile$" "$InstallDir$"
+move "$InstallDir$$LangSourceFile$" "$InstallDir$nativeLang.xml"
 
 
 ;=====================================================================
@@ -252,14 +289,14 @@ delete -sf "$InstallDir$\updater"
 
 
 ;=====================================================================
-[XMLPatch_config]
+[sub_restore_plugin]
 ;=====================================================================
-openNodeSet
-	documentroot
-	all_childelements_with:
-	 elementname: "GUIConfigs"
-	all_childelements_with:
-	 elementname: "GUIConfig"
-	 attribute: "name" value="noUpdate"
-end
-SetText "yes"
+if FileExists($tmpDir$+"%x%") 
+	files_restorePlugin
+endif
+
+
+;=====================================================================
+[files_restorePlugin]
+;=====================================================================
+copy  -s "$TmpDir$%x%\" "$PluginDir$%x%"
