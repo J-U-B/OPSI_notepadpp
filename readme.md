@@ -26,8 +26,7 @@
 
 <div id="paketinfo"></div>
 
-Diese OPSI-Paket fuer **Notepad++** wurde fuer das Repository des *DFN* und 
-des *Max-Planck-Instituts fuer Mikrostrukturphysik* erstellt.  
+Diese OPSI-Paket fuer **Notepad++** wurde fuer die Repositories von *OPSI 4 Institutes* und des *Max-Planck-Instituts fuer Mikrostrukturphysik* erstellt.  
 Es wird versucht auf die Besonderheiten der jeweiligen Repositories einzugehen;
 entsprechend werden durch ein einfaches *Makefile* aus den Quellen verschiedene
 Pakete erstellt.
@@ -149,19 +148,20 @@ Die Installation der Software laesst sich ueber eine Reihe von Properties beeinf
 Default-Konfiguration angegeben werden. Diese muss im Verzeichnis <code>custom</code>
 liegen und ueberschreibt die vom Installer angelegte Minimalkonfiguration
 (<code>notepadpp.xml</code>).
-* **<code>custom-post-install</code>** - Das hier angegebene OPSI-Script wird
+* **<code>custom_post_install</code>** - Das hier angegebene OPSI-Script wird
 ins Setup eingebunden und im Anschluss an die Installation ausgefuehrt.
-* **<code>custom-post-deinstall</code>** - Das hier angegebene OPSI-Script wird
+* **<code>custom_post_uninstall</code>** - Das hier angegebene OPSI-Script wird
 in die Deinstallation eingebunden und im Anschluss ausgefuehrt.
 * **<code>install_architecture</code>** - Hier kann zwischen der 32- und der
 64-Bit-Version der Software gewaehlt werden. Standardmaessig wird die zum 
 Betriebssystem passende Version gewaehlt.
+* **<code>keep_plugins</code>** - Uebernahme installierter Plugins
 * **<code>kill_running</code>** - Erfolgt die (De)Installation *on demand* und
 nicht beim Boot/Shutdown, ist es moeglich, dass eine Instanz der Software laueft.
 Hiermit ist es moeglich diese Zwangsweise zu beenden. Andernfalls schlaegt die 
 Installation fehl.
 * **<code>language</code>** - Wahl der Sprache des Interface.
-* **<code>desktop-link</code>** - Ermoeglicht das Anlegen einer Desktopverknuepfung.
+* **<code>desktop_link</code>** - Ermoeglicht das Anlegen einer Desktopverknuepfung.
 * **<code>log_level</code>** - Setzt einen alternativen Loglevel fuer das Paket. Fuer
 *Releases* ist der Standardwert 5, fuer *Testpakete* 7.
 * **<code>updater</code>** - Nach Updates suchen und den Nutzer informieren?
@@ -200,7 +200,7 @@ Praefixes in der Produkt-Id definieren die Art des Paketes:
 * **0_** - Es handelt sich um ein Test-Paket. Beim Uebergang zur Produktions-Release
 wird der Praefix entfernt.
 * **o4i_** - Das Paket ist zur Verwendung im Opsi4Institutes-Repository vorgesehen.
-* **dfn_** - Das Paket ist zur Verwendung im DFN-Repository vorgesehen. (identisch mit o4i)
+* **dfn_** - Das Paket ist zur Verwendung im DFN-Repository vorgesehen. (**abgekuendigt**)
 
 Die Reihenfolge der Praefixes ist relevant; die Markierung als Testpaket ist 
 stets fuehrend.
@@ -293,6 +293,7 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 
 ## Anmerkungen/ToDo ##
 
+siehe Issues
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2019-07-02 07:53:53 +0200
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2020-03-06 17:37:20 +0100
