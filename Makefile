@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.4.3
+# Version: 2.5.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2020-01-30 07:24:18 +0100
+# 2020-03-06 13:24:53 +0100
 ############################################################
 
 .PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download
@@ -13,6 +13,20 @@ DEFAULT_SPEC = spec.json
 DEFAULT_ALLINC = true
 DEFAULT_KEEPFILES = false
 DEFAULT_ARCHIVEFORMAT = cpio
+
+#--- temporary -----------------------------------
+#DEFAULT_LEGACY = false
+#LEGACY ?= $(DEFAULT_LEGACY)
+#LEGACY_SEL := "[true] [false]"
+#LFX := $(firstword $(LEGACY))
+#LFY := $(shell echo $(LFX) | tr A-Z a-z)
+#LFZ := $(findstring [$(LFY)],$(LEGACY_SEL))
+#ifeq (,$(LFZ))
+#	IS_LEGACY := false
+#else
+#	IS_LEGACY := $(LFY)
+#endif
+#-------------------------------------------------
 
 PWD = ${CURDIR}
 BUILD_DIR = BUILD
@@ -135,6 +149,7 @@ var_test:
 	@echo "* Files Mask            : [$(FILES_MASK)]"
 	@echo "* Grep Mask             : [$(GREP_MASK)]"
 	@echo "* Keep files            : [$(KEEPFILES)]"
+	@echo "* Legacy build          : [$(IS_LEGACY)]"
 	@echo "=================================================================="
 	@echo "* Installer files in $(DL_DIR):"
 	@# @for F in `ls -1 $(DL_DIR)/$(FILES_MASK) | sed -re 's/.*\/(.*)$$/\1/' `; do echo "    $$F"; done 
@@ -335,6 +350,8 @@ build_json:
 	@if [ ! -f "$(SPEC)" ]; then echo "*Error* spec file not found: \"$(SPEC)\""; exit 1; fi
 	@if [ ! -d "$(BUILD_DIR)" ]; then mkdir -p "$(BUILD_DIR)"; fi
 	@$(if $(filter $(STAGE),testing), $(eval TESTING :="true"), $(eval TESTING := "false"))
+	@$(if $(filter $(ORGPREFIX),dfn_), $(eval LEGACY :="true"), $(eval LEGACY := "false"))
+	@echo "* Legacy build: $(LEGACY)"
 	@echo "* Creating $(BUILD_JSON)"
 	@rm -f $(BUILD_JSON)
 	$(PYSTACHE) $(SPEC)   "{ \"M_TODAY\"      : \"$(TODAY)\",         \
@@ -344,6 +361,7 @@ build_json:
 	                         \"M_TESTPREFIX\" : \"$(TESTPREFIX)\",    \
 	                         \"M_ALLINC\"     : \"$(ALLINCLUSIVE)\",  \
 	                         \"M_KEEPFILES\"  : \"$(KEEPFILES)\",     \
+	                         \"M_LEGACY\"     : \"$(LEGACY)\",        \
 	                         \"M_TESTING\"    : \"$(TESTING)\"        }" > $(BUILD_JSON)
 
 download: build_json

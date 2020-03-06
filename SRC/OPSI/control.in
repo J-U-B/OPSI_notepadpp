@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2020-02-06 13:10:08 +0100           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2020-03-06 12:55:02 +0100           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -69,6 +69,7 @@ name: keep_plugins
 description: Keep installed (non-standard) plugins on update
 default: True
 
+{{#ifdef_legacy}}
 [ProductProperty]
 type: bool
 name: desktop-link
@@ -92,6 +93,33 @@ editable: True
 description: Define filename for include script in custom directory after deinstallation
 values: ["custom_test.opsiinc", "none", "post-deinstall.opsiinc"]
 default: ["none"]
+{{/ifdef_legacy}}
+
+{{^ifdef_legacy}}
+[ProductProperty]
+type: bool
+name: desktop_link
+description: generate or delete Desktop link
+default: False
+
+[ProductProperty]
+type: unicode
+name: custom_post_install
+multivalue: False
+editable: True
+description: Define filename for include script in custom directory after installation
+values: ["custom_test.opsiinc", "none", "post_install.opsiinc"]
+default: ["none"]
+
+[ProductProperty]
+type: unicode
+name: custom_post_uninstall
+multivalue: False
+editable: True
+description: Define filename for include script in custom directory after deinstallation
+values: ["custom_test.opsiinc", "none", "post_uninstall.opsiinc"]
+default: ["none"]
+{{/ifdef_legacy}}
 
 [ProductProperty]
 type: unicode

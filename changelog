@@ -1,3 +1,9 @@
+notepadpp 7.8.5-15:
+	* product update --> 7.8.5
+	* spec.json: ifdef_legacy for controlling legacy build (dfn)
+	* Makefile: handling legacy build
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-03-06 13:39:13 +0100
+
 notepadpp 7.8.4-14 testing:
 	* keep installed plugins on update (new property keep_plugins)
 	* removed unneeded code for patching XML config file

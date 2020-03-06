@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 10:34:25 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-03-06 13:37:43 +0100
 ;======================================================================
 
 ;======================================================================
@@ -204,7 +204,9 @@ else
 		logWarning "the near future. The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
 		logWarning "Please install o4i_" + $StrippedProductId$ + " from the repository."
 		logWarning "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
-		logWarning "*******************************************************************************************"	
+		logWarning "*******************************************************************************************"
+		; set $result$ = "DEPRECATED package! Please use o4i_" + $StrippedProductId$ + " instead."
+		; set $result$ = currentProductSetReport($result$)
 	endif	
 endif
 

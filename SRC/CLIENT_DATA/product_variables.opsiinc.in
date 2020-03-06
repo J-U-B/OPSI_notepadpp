@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 08:52:51 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-03-06 12:56:00 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -171,13 +171,24 @@ Set $pr_KeepPlugins$ 		= GetProductProperty("keep_plugins","True")
 ;-----------------------------------------------------------
 ;*** property: create desktop/startmenu/quickstart link?
 ;-----------------------------------------------------------
+{{#ifdef_legacy}}
 Set $pr_DesktopLink$        = GetProductProperty("desktop-link","False")
+{{/ifdef_legacy}}
+{{^ifdef_legacy}}
+Set $pr_DesktopLink$        = GetProductProperty("desktop_link","False")
+{{/ifdef_legacy}}
 
 ;-----------------------------------------------------------
 ;*** properties: post install/uninstall
 ;-----------------------------------------------------------
+{{#ifdef_legacy}}
 set $CustomPostInstall$     = getProductProperty("custom-post-install","none")
 set $CustomPostUninstall$   = getProductProperty("custom-post-deinstall","none")
+{{/ifdef_legacy}}
+{{^ifdef_legacy}}
+set $CustomPostInstall$     = getProductProperty("custom_post_install","none")
+set $CustomPostUninstall$   = getProductProperty("custom_post_uninstall","none")
+{{/ifdef_legacy}}
 
 ;-----------------------------------------------------------
 ;*** select PSDETAIL:
