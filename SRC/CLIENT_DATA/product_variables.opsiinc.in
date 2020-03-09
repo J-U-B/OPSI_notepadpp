@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-03-06 12:56:00 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-03-09 17:49:55 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -250,6 +250,7 @@ Set $Inst_Log$          = $LogDir$ + "\"+$ProductId$+"_install.log"
 Set $Uninst_Log$        = $LogDir$ + "\"+$ProductId$+"_uninstall.log"
 
 Set $PluginsExclude$    = createStringList("Config", "mimeTools", "NppConverter", "NppExport")
+Set $plugin_count$      = "0"
 
 ;Set $SearchPattern$    = $ProductName$
 ;Set $Uninst_ID_std$    = $ProductName$
