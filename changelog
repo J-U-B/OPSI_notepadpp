@@ -1,3 +1,10 @@
+notepadpp 7.8.5-17:
+	* product update --> 7.8.6
+	* prerequisites: OS detection
+	* Makefile: keep changelog optionally in a separate file (changelog.txt)
+	* stage 2 of transition from DFN to O4I (error message, full functionality)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-04-22 12:44:20 +0200
+
 notepadpp 7.8.5-16 testing:
 	* Quickfix for issue #20: "Script-Error:  has no Integer format"
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-03-09 17:54:00 +0100

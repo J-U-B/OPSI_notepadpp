@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.5.0
+# Version: 2.5.1
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2020-03-06 13:24:53 +0100
+# 2020-04-22 12:38:05 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download
@@ -13,6 +13,10 @@ DEFAULT_SPEC = spec.json
 DEFAULT_ALLINC = true
 DEFAULT_KEEPFILES = false
 DEFAULT_ARCHIVEFORMAT = cpio
+### to keep the changelog inside the control set CHANGELOG_TGT to an empty string
+### otherwise the given filename will be used:
+CHANGELOG_TGT = changelog.txt
+# CHANGELOG_TGT =
 
 #--- temporary -----------------------------------
 #DEFAULT_LEGACY = false
@@ -150,6 +154,7 @@ var_test:
 	@echo "* Grep Mask             : [$(GREP_MASK)]"
 	@echo "* Keep files            : [$(KEEPFILES)]"
 	@echo "* Legacy build          : [$(IS_LEGACY)]"
+	@echo "* Changelog target      : [$(CHANGELOG_TGT)]"
 	@echo "=================================================================="
 	@echo "* Installer files in $(DL_DIR):"
 	@# @for F in `ls -1 $(DL_DIR)/$(FILES_MASK) | sed -re 's/.*\/(.*)$$/\1/' `; do echo "    $$F"; done 
@@ -385,7 +390,14 @@ build: download clean copy_from_src
 	done	
 	
 	if [ -e $(BUILD_DIR)/OPSI/control -a -e changelog ]; then \
-		cat changelog >> $(BUILD_DIR)/OPSI/control; \
+		if [ -n "$(CHANGELOG_TGT)" ]; then \
+			echo "* Using separate CHANGELOG file."; \
+			echo "The logs were moved to $(CHANGELOG_TGT)" >> $(BUILD_DIR)/OPSI/control; \
+			cp -f changelog $(BUILD_DIR)/OPSI/$(CHANGELOG_TGT); \
+		else \
+			echo "* Including changelogs in CONTROL file."; \
+			cat changelog >> $(BUILD_DIR)/OPSI/control; \
+		fi; \
 	fi
 	
 	for F in $(FILES_IN); do \
