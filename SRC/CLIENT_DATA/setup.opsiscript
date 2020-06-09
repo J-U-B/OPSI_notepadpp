@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-04-22 12:48:57 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-06-09 08:04:28 +0200
 ;======================================================================
 
 ;======================================================================
@@ -23,7 +23,7 @@ StayOnTop=false
 ;======================================================================
 include_insert "%ScriptPath%\product_variables.opsiinc"
 
-
+if $isDFN$ = "false"
 ;=== Check free space
 if not(HasMinimumSpace ("%SystemDrive%", $MinimumSpace$))
 	LogError "Not enough space on %SystemDrive%, " + $MinimumSpace$ + " on drive %SystemDrive% needed for " + $ProductId$
@@ -190,27 +190,29 @@ else
 	;=== measure installation time
 	set $TimeDiff$ = getDiffTimeSec
 	Message  "Setup time: " + $TimeDiff$ + " seconds"	
-	
-	
-	;=== Prepare the change from dfn_ to o4i_
-	; Stage 1 - logWarning
-	; Stage 2 - logError (entire functionality)
-	; Stage 3 - logError (NO functionality)
-	; Stage 4 - removal off all dfn_ related code form this source
-	;-----------------------------------------
-	; This is stage 2
-	;-----------------------------------------
-	if $isDFN$ = "true"
-		logError "*******************************************************************************************"
-		logError "This package will not be maintained any longer and will be removed from the repository in"
-		logError "the near future. The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
-		logError "Please install o4i_" + $StrippedProductId$ + " from the repository."
-		logError "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
-		logError "*******************************************************************************************"
-		; set $result$ = "DEPRECATED package! Please use o4i_" + $StrippedProductId$ + " instead."
-		; set $result$ = currentProductSetReport($result$)
-	endif	
 endif
+endif
+
+;=== Prepare the change from dfn_ to o4i_
+; Stage 1 - logWarning
+; Stage 2 - logError (entire functionality)
+; Stage 3 - logError (NO functionality)
+; Stage 4 - removal off all dfn_ related code form this source
+;-----------------------------------------
+; This is stage 3
+;-----------------------------------------
+if $isDFN$ = "true"
+	logError "*******************************************************************************************"
+	logError "This package will not be maintained any longer and will be removed from the repository in"
+	logError "the near future. The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
+	logError "Please install o4i_" + $StrippedProductId$ + " from the repository."
+	logError "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
+	logError "*******************************************************************************************"
+	;set $result$ = "DEPRECATED package! Please use o4i_" + $StrippedProductId$ + " instead."
+	;set $result$ = currentProductSetReport($result$)
+	isFatalError "Discontinued package!"
+endif
+
 
  
 ;======================================================================

@@ -1,4 +1,11 @@
-notepadpp 7.8.5-17:
+notepadpp 7.8.7-18:
+	* product update --> 7.8.7
+	* Makefile: copy readme.[txt|md|pdf] (if exists) to OPSI/
+	* added readme.pdf
+	* dfn-o4i-transition Stage 3 - logError (NO functionality, except uninstall)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-06-09 07:31:56 +0200
+
+notepadpp 7.8.6-17:
 	* product update --> 7.8.6
 	* prerequisites: OS detection
 	* Makefile: keep changelog optionally in a separate file (changelog.txt)

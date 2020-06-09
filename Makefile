@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.5.1
+# Version: 2.5.2
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2020-04-22 12:38:05 +0200
+# 2020-04-25 11:45:58 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download
@@ -388,6 +388,13 @@ build: download clean copy_from_src
 		rm -f $(BUILD_DIR)/OPSI/$$F; \
 		${PYSTACHE} $(SRC_DIR)/OPSI/$$F.in $(BUILD_JSON) > $(BUILD_DIR)/OPSI/$$F; \
 	done	
+
+	for E in txt md pdf; do \
+		if [ -e readme.$$E ]; then \
+			echo "Copying additional file: readme.$$E"; \
+			cp -f readme.$$E $(BUILD_DIR)/OPSI/; \
+		fi; \
+	done
 	
 	if [ -e $(BUILD_DIR)/OPSI/control -a -e changelog ]; then \
 		if [ -n "$(CHANGELOG_TGT)" ]; then \
