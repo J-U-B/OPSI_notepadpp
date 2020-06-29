@@ -197,7 +197,7 @@ endif
 ; Stage 1 - logWarning
 ; Stage 2 - logError (entire functionality)
 ; Stage 3 - logError (NO functionality)
-; Stage 4 - removal off all dfn_ related code form this source
+; Stage 4 - removal off this package from repository
 ;-----------------------------------------
 ; This is stage 3
 ;-----------------------------------------
