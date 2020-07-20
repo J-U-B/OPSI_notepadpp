@@ -1,8 +1,10 @@
 notepadpp 7.8.9-19:
 	* product update --> 7.8.9
 	* added some dfn->o4i transition code for build process
+	* helpers.opsifunc v1.6 (added: productExtUpdateOnClient)
+	* update status information for EOL package on depot
 	* dfn-o4i-transition Stage 4 - logFatalError (NO functionality, except uninstall, no more updates)
-	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-07-20 07:01:51 +0200
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-07-20 12:54:46 +0200
 
 notepadpp 7.8.8-18:
 	* product update --> 7.8.8
