@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-06-09 08:04:28 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2020-07-20 08:17:08 +0200
 ;======================================================================
 
 ;======================================================================
@@ -197,19 +197,20 @@ endif
 ; Stage 1 - logWarning
 ; Stage 2 - logError (entire functionality)
 ; Stage 3 - logError (NO functionality)
-; Stage 4 - removal off this package from repository
+; Stage 4 - logError (NO functionality except uninstall; no binaries) 
+;           removal of this package from repository pending
 ;-----------------------------------------
-; This is stage 3
+; This is stage 4
 ;-----------------------------------------
 if $isDFN$ = "true"
 	logError "*******************************************************************************************"
-	logError "This package will not be maintained any longer and will be removed from the repository in"
-	logError "the near future. The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
+	logError "This package will not be maintained any longer!"
+	logError "The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
 	logError "Please install o4i_" + $StrippedProductId$ + " from the repository."
 	logError "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
 	logError "*******************************************************************************************"
-	;set $result$ = "DEPRECATED package! Please use o4i_" + $StrippedProductId$ + " instead."
-	;set $result$ = currentProductSetReport($result$)
+	; set $result$ = "Package is of life"
+	; set $result$ = currentProductSetReport($result$)
 	isFatalError "Discontinued package!"
 endif
 
