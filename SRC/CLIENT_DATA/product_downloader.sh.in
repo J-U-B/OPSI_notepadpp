@@ -4,15 +4,12 @@
 # Product: NOTEPAD++
 #
 # Version 1.4
-# Jens Boettge <boettge@mpi-halle.mpg.de>  2020-02-06 12:44:23 +0100
+# Jens Boettge <boettge@mpi-halle.mpg.de>  2020-09-30 11:58:11 +0200
 #=======================================================================
 # link examples:
 # https://notepad-plus-plus.org/download
-# 	https://notepad-plus-plus.org/repository/7.x/7.7/npp.7.7.Installer.x64.exe
-#	https://notepad-plus-plus.org/repository/7.x/7.7/npp.7.7.Installer.exe
-# new server since Oct. 2019:
-#	https://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.x64.exe
-#	https://download.notepad-plus-plus.org/repository/7.x/7.8/npp.7.8.Installer.exe
+# 	https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.Installer.x64.exe
+#	https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.Installer.exe
 #=======================================================================
 
 ERR=0
@@ -99,8 +96,7 @@ fi
 #	exit $ERR
 #fi
 
-#BASE="https://notepad-plus-plus.org/repository/${MAJOR}.x/$VERSION/npp.${VERSION}.Installer%%WARCH%%.exe"
-BASE="http://download.notepad-plus-plus.org/repository/${MAJOR}.x/$VERSION/npp.${VERSION}.Installer%%WARCH%%.exe"
+BASE=https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v${VERSION}/npp.${VERSION}.Installer%%WARCH%%.exe
 PKG_FILE="${PROD}-${VERSION}-x%%ARCH%%.exe"
 
 # in postinst: DEST_DIR=DST="${CLIENT_DATA_DIR}/files"

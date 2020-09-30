@@ -1,3 +1,9 @@
+notepadpp 7.9-20:
+	* product update --> 7.9
+	* alternative URLs for download removed
+	* adjusted generated URLs
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-09-30 12:04:09 +0200
+
 notepadpp 7.8.9-19:
 	* product update --> 7.8.9
 	* added some dfn->o4i transition code for build process
