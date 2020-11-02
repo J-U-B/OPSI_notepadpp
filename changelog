@@ -1,3 +1,8 @@
+notepadpp 7.9.1-22:
+	* product update --> 7.9.1
+	* cmd64 replacement fixed
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-11-02 08:51:43 +0100
+
 notepadpp 7.9-21:
 	* compatibility with opsi-winst 4.12.3.16 and above ensured: cmd64 replaced
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2020-10-28 10:25:08 +0100
