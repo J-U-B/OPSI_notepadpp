@@ -1,3 +1,8 @@
+notepadpp 7.9.2-23:
+	* product update --> 7.9.2
+	* adjusted control.in
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-01-04 07:24:17 +0100
+
 notepadpp 7.9.1-22:
 	* product update --> 7.9.1
 	* cmd64 replacement fixed

@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2020-07-20 08:10:53 +0200           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2021-01-04 07:27:07 +0100           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -13,18 +13,18 @@ id: {{TESTPREFIX}}{{ORGPREFIX}}{{O_SOFTWARE}}
 name: {{O_SOFTWARE_NAME}}
 description: • Notepad++ is a free text editor optimized for programming, etc. with syntax highlighting for many programming languages and code folding. 
     • Texteditor optimiert für die Programmierung u.a. mit Syntaxhervorhebung für viele Programmiersprachen und Code-Faltung.
-{{^ifdef_legacy}}
-advice: Maintainer: Jens Boettge <boettge@mpi-halle.mpg.de>
-{{/ifdef_legacy}}
-{{#ifdef_legacy}}
-advice: Package has reached END OF LIFE! Use o4i_{{O_SOFTWARE}} instead!
     _____
     Maintainer: Jens Boettge <boettge@mpi-halle.mpg.de>
-{{/ifdef_legacy}}
     Organization: {{ORGNAME}}
     Release date: {{O_RELEASE_DATE}}
     Homepage: https://notepad-plus-plus.org/
-    Changelog: {{O_SOFTWARE_CHANGES}}    
+    Changelog: {{O_SOFTWARE_CHANGES}}
+{{^ifdef_legacy}}
+advice:
+{{/ifdef_legacy}}
+{{#ifdef_legacy}}
+advice: Package has reached END OF LIFE! Use o4i_{{O_SOFTWARE}} instead!
+{{/ifdef_legacy}}
 version: {{O_SOFTWARE_VER}}
 priority: 0
 licenseRequired: False
