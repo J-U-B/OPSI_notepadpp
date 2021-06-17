@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.6.0
+# Version: 2.6.1
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2020-07-20 07:17:56 +0200
+# 2021-06-17 12:08:42 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download pdf
@@ -327,7 +327,7 @@ pdf:
 				-V mainfont="DejaVu Serif" \
 				-V monofont="DejaVu Sans Mono" \
 				-o "readme.pdf"; \
-			rm -f $(BUILD_DIR)/readme_tmp.md \
+			rm -f $(BUILD_DIR)/readme_tmp.md; \
 		else \
 			echo "* readme.pdf seems to be up to date"; \
 		fi \
