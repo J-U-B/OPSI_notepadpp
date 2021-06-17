@@ -20,7 +20,7 @@
   * [Notepad++](#lic_notepadpp)
   * [7zip](#lic_7zip)
   * [psDetail](#lic_psdetail)
-  * [GetRealName](lic_getrealname)
+  * [GetRealName](#lic_getrealname)
 * [Anmerkungen/ToDo](#anmerkungen_todo)
 
 
@@ -92,7 +92,8 @@ ein alternatives Spec--File uebergeben werden:
 Das Paket kann mit *"batteries included"* erstellt werden. In dem Fall erfolgt 
 der Download der Software beim Erstellen des OPSI-Paketes und nicht erst bei
 dessen Installation:
-> *<code>ALLINC=[true|false]</code>*
+
+> *<code>ALLINC=&lt;true|false&gt;</code>*
 
 Standard ist hier die Erstellung des vollstaendigen Paketes (```ALLINC=true```).
 
@@ -101,13 +102,15 @@ Bei der Installation des Paketes im Depot wird ein eventuell vorhandenes
 spaeter wiederhergestellt. Diese Verzeichnis beeinhaltet die eigentlichen
 Installationsfiles. Sollen alte Version aufgehoben werden, kann das ueber
 einen Parameter beeinflusst werden:
-> *<code>KEEPFILES=[true|false]</code>*
+
+> *<code>KEEPFILES=&lt;true|false&gt;</code>*
 
 Standardmaessig sollen die Files geloescht werden.
 
 OPSI erlaubt des Pakete im Format <code>cpio</code> und <code>tar</code> zu erstellen.  
 Als Standard ist <code>cpio</code> festgelegt.  
 Das Makefile erlaubt die Wahl des Formates ueber die Umgebungsvariable bzw. den Parameter:
+
 > *<code>ARCHIVE_FORMAT=&lt;cpio|tar&gt;</code>*
 
 
@@ -296,4 +299,4 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 siehe Issues
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2020-03-06 17:37:20 +0100
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2021-06-17 09:10:20 +0200

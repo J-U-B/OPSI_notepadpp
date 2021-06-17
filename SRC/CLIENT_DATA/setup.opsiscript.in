@@ -2,12 +2,13 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-07-20 12:56:23 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2021-06-17 08:42:46 +0200
 ;======================================================================
 
 ;======================================================================
 [Initial]
 ;======================================================================
+encoding=utf8
 setLogLevel=5
 ; Log Errors in Logfile and abort:
 ExitOnError=true

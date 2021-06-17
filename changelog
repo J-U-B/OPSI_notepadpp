@@ -1,3 +1,18 @@
+notepadpp 8.1-24:
+	* product update --> 8.1
+	* added encoding to *.opsiscript
+	* updated helpers.opsifunc -> v1.7
+	* added SRC/TOOLS/mustache*, removed SRC/SCRIPTS/pystache_opsi.py
+	* added SRC/DOCU/readme.sty
+	* Makefile:
+	    * switched template engine from pystache to mustache (Go implementation)
+	    * new target pdf to build readme.pdf from readme.md
+		* copy changelog and readme.pdf also to CLIENT_DATA
+	    * ...some minor improvements
+	* adjusted readme.md
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-06-17 09:15:51 +0200
+	
+	
 notepadpp 7.9.5-23:
 	* product update --> 7.9.5
 	* moved some images to SRC/IMAGES
