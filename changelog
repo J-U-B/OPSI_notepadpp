@@ -7,10 +7,12 @@ notepadpp 8.1-24:
 	* Makefile:
 	    * switched template engine from pystache to mustache (Go implementation)
 	    * new target pdf to build readme.pdf from readme.md
-		* copy changelog and readme.pdf also to CLIENT_DATA
+	    * copy changelog and readme.pdf also to CLIENT_DATA
 	    * ...some minor improvements
 	* adjusted readme.md
-	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-06-17 09:15:51 +0200
+	* added code_of_conduct
+	* added .gitattributes
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-06-17 09:53:47 +0200
 	
 	
 notepadpp 7.9.5-23:
