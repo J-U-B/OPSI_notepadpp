@@ -1,3 +1,9 @@
+notepadpp 8.1.1-25:
+	* product update --> 8.1.1
+	* use variables for download links in json file (note: default is generic link in downloader)
+	* removed 'dfn*' targets fomr Makefile
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-07-05 11:47:21 +0200
+	
 notepadpp 8.1-24:
 	* product update --> 8.1
 	* added encoding to *.opsiscript
@@ -13,8 +19,7 @@ notepadpp 8.1-24:
 	* added code_of_conduct
 	* added .gitattributes
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-06-17 09:53:47 +0200
-	
-	
+
 notepadpp 7.9.5-23:
 	* product update --> 7.9.5
 	* moved some images to SRC/IMAGES

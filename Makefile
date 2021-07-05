@@ -1,11 +1,11 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.6.1
+# Version: 2.7.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2021-06-17 12:08:42 +0200
+# 2021-07-05 11:46:39 +0200
 ############################################################
 
-.PHONY: header clean mpimsp o4i dfn mpimsp_test o4i_test dfn_test all_test all_prod all help download pdf
+.PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
 .DEFAULT_GOAL := help
 
 ### defaults:
@@ -194,14 +194,6 @@ o4i: header
 			STAGE="release"  			\
 	build
 
-dfn: header
-	@echo "---------- building DFN package ----------------------------------"
-	@make 	TESTPREFIX=""    			\
-			ORGNAME="O4I"    			\
-			ORGPREFIX="dfn_" 			\
-			STAGE="release"  			\
-	build
-
 mpimsp_test: header
 	@echo "---------- building MPIMSP testing package -----------------------"
 	@make 	TESTPREFIX="0_"	 			\
@@ -234,30 +226,6 @@ o4i_test_noprefix: header
 			STAGE="testing"  			\
 	build
 
-dfn_test: header
-	@echo "---------- building DFN testing package --------------------------"
-	@make 	TESTPREFIX="test_"  		\
-			ORGNAME="O4I"    			\
-			ORGPREFIX="dfn_" 			\
-			STAGE="testing"  			\
-	build
-
-dfn_test_0: header
-	@echo "---------- building DFN testing package --------------------------"
-	@make 	TESTPREFIX="0_"  			\
-			ORGNAME="O4I"    			\
-			ORGPREFIX="dfn_" 			\
-			STAGE="testing"  			\
-	build
-
-dfn_test_noprefix: header
-	@echo "---------- building DFN testing package --------------------------"
-	@make 	TESTPREFIX=""    			\
-			ORGNAME="O4I"    			\
-			ORGPREFIX="dfn_" 			\
-			STAGE="testing"  			\
-	build
-
 clean_packages: header
 	@echo "---------- cleaning packages, checksums and zsync ----------------"
 	@rm -f $(PACKAGE_DIR)/*.md5 $(PACKAGE_DIR)/*.opsi $(PACKAGE_DIR)/*.zsync
@@ -280,12 +248,8 @@ help: header
 	@echo "	o4i_test"
 	@echo "	o4i_test_0"
 	@echo "	o4i_test_noprefix"	
-	@echo "	dfn"
-	@echo "	dfn_test"
-	@echo "	dfn_test_0"
-	@echo "	dfn_test_noprefix"
-	@echo "	all_prod   (contains: mpimsp dfn)"
-	@echo "	all_test   (contains: mpimsp_test dfn_test)"
+	@echo "	all_prod   (contains: mpimsp o4i)"
+	@echo "	all_test   (contains: mpimsp_test o4i_test)"
 	@echo "	clean"
 	@echo "	clean_packages"
 	@echo "	fix_rights            - fix rights for package directory"
