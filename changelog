@@ -1,3 +1,7 @@
+notepadpp 8.1.2-25:
+	* product update --> 8.1.2
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-07-19 07:08:55 +0200
+
 notepadpp 8.1.1-25:
 	* product update --> 8.1.1
 	* use variables for download links in json file (note: default is generic link in downloader)
