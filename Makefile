@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.7.0
+# Version: 2.8.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2021-07-05 11:46:39 +0200
+# 2021-08-13 08:36:25 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
@@ -17,20 +17,6 @@ DEFAULT_ARCHIVEFORMAT = cpio
 ### otherwise the given filename will be used:
 CHANGELOG_TGT = changelog.txt
 # CHANGELOG_TGT =
-
-#--- temporary -----------------------------------
-#DEFAULT_LEGACY = false
-#LEGACY ?= $(DEFAULT_LEGACY)
-#LEGACY_SEL := "[true] [false]"
-#LFX := $(firstword $(LEGACY))
-#LFY := $(shell echo $(LFX) | tr A-Z a-z)
-#LFZ := $(findstring [$(LFY)],$(LEGACY_SEL))
-#ifeq (,$(LFZ))
-#	IS_LEGACY := false
-#else
-#	IS_LEGACY := $(LFY)
-#endif
-#-------------------------------------------------
 
 PWD = ${CURDIR}
 BUILD_DIR = BUILD
@@ -155,7 +141,6 @@ var_test:
 	@echo "* Files Mask            : [$(FILES_MASK)]"
 	@echo "* Grep Mask             : [$(GREP_MASK)]"
 	@echo "* Keep files            : [$(KEEPFILES)]"
-	@echo "* Legacy build          : [$(IS_LEGACY)]"
 	@echo "* Changelog target      : [$(CHANGELOG_TGT)]"
 	@echo "=================================================================="
 	@echo "* Installer files in $(DL_DIR):"
@@ -323,9 +308,6 @@ copy_from_src:	build_dirs build_md5
 	@cp -upr $(SRC_DIR)/CLIENT_DATA/*.opsiinc     $(BUILD_DIR)/CLIENT_DATA/
 	@cp -upr $(SRC_DIR)/CLIENT_DATA/*.opsifunc    $(BUILD_DIR)/CLIENT_DATA/
 
-	@if [ -f  "readme.pdf" ] ; then cp -upL readme.pdf   $(BUILD_DIR)/CLIENT_DATA/; fi
-	@if [ -f  "changelog" ]  ; then cp -upL changelog    $(BUILD_DIR)/CLIENT_DATA/changelog.txt; fi
-
 	@$(eval NUM_FILES := $(shell ls -l $(DL_DIR)/$(FILES_MASK) 2>/dev/null | wc -l))
 	@if [ "$(ALLINCLUSIVE)" = "true" ]; then \
 		echo "  * building batteries included package"; \
@@ -365,8 +347,6 @@ build_json:
 	@if [ ! -f "$(SPEC)" ]; then echo "*Error* spec file not found: \"$(SPEC)\""; exit 1; fi
 	@if [ ! -d "$(BUILD_DIR)" ]; then mkdir -p "$(BUILD_DIR)"; fi
 	@$(if $(filter $(STAGE),testing), $(eval TESTING :="true"), $(eval TESTING := "false"))
-	@$(if $(filter $(ORGPREFIX),dfn_), $(eval LEGACY :="true"), $(eval LEGACY := "false"))
-	@echo "* Legacy build: $(LEGACY)"
 	@echo "* Creating $(BUILD_JSON)"
 	@rm -f $(BUILD_JSON)
 	@echo "{\n\
@@ -402,24 +382,26 @@ build: download pdf clean copy_from_src
 		$(MUSTACHE) $(BUILD_JSON) $(SRC_DIR)/OPSI/$$F.in > $(BUILD_DIR)/OPSI/$$F; \
 	done
 
-	for E in txt md pdf; do \
-		if [ -e readme.$$E ]; then \
-			echo "Copying additional file: readme.$$E"; \
-			cp -f readme.$$E $(BUILD_DIR)/OPSI/; \
+	for E in readme.txt readme.md readme.pdf changelog.md changelog.pdf; do \
+		if [ -e $$E ]; then \
+			echo "Copying additional file: $$E"; \
+			cp -fupL $$E $(BUILD_DIR)/CLIENT_DATA/; \
+			cp -fupL $$E $(BUILD_DIR)/OPSI/; \
 		fi; \
 	done
-	
-	if [ -e $(BUILD_DIR)/OPSI/control -a -e changelog ]; then \
+
+	if [ -e $(BUILD_DIR)/OPSI/control -a -e changelog.txt ]; then \
 		if [ -n "$(CHANGELOG_TGT)" ]; then \
 			echo "* Using separate CHANGELOG file."; \
 			echo "The logs were moved to $(CHANGELOG_TGT)" >> $(BUILD_DIR)/OPSI/control; \
-			cp -f changelog $(BUILD_DIR)/OPSI/$(CHANGELOG_TGT); \
+			cp -fupL changelog.txt $(BUILD_DIR)/OPSI/$(CHANGELOG_TGT); \
 		else \
 			echo "* Including changelogs in CONTROL file."; \
-			cat changelog >> $(BUILD_DIR)/OPSI/control; \
+			cat changelog.txt >> $(BUILD_DIR)/OPSI/control; \
 		fi; \
+		cp -fupL changelog.txt $(BUILD_DIR)/CLIENT_DATA/$(CHANGELOG_TGT); \
 	fi
-	
+
 	for F in $(FILES_IN); do \
 		echo "* Creating CLIENT_DATA/$$F"; \
 		rm -f $(BUILD_DIR)/CLIENT_DATA/$$F; \

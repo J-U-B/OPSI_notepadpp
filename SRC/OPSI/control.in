@@ -1,6 +1,6 @@
 {{! ========================================================================== }}
 {{!  Norepad++ CONTROL                                                         }}
-{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2021-01-04 07:27:07 +0100           }}
+{{!  J. Boettge <boettge@mpi-halle.mpg.de> 2021-08-13 08:14:17 +0200           }}
 {{! ========================================================================== }}
 [Package]
 version: {{O_PKG_VER}}
@@ -19,12 +19,7 @@ description: • Notepad++ is a free text editor optimized for programming, etc.
     Release date: {{O_RELEASE_DATE}}
     Homepage: https://notepad-plus-plus.org/
     Changelog: {{O_SOFTWARE_CHANGES}}
-{{^ifdef_legacy}}
 advice:
-{{/ifdef_legacy}}
-{{#ifdef_legacy}}
-advice: Package has reached END OF LIFE! Use o4i_{{O_SOFTWARE}} instead!
-{{/ifdef_legacy}}
 version: {{O_SOFTWARE_VER}}
 priority: 0
 licenseRequired: False
@@ -76,33 +71,6 @@ name: keep_plugins
 description: Keep installed (non-standard) plugins on update
 default: True
 
-{{#ifdef_legacy}}
-[ProductProperty]
-type: bool
-name: desktop-link
-description: generate or delete Desktop link
-default: False
-
-[ProductProperty]
-type: unicode
-name: custom-post-install
-multivalue: False
-editable: True
-description: Define filename for include script in custom directory after installation
-values: ["custom_test.opsiinc", "none", "post-install.opsiinc"]
-default: ["none"]
-
-[ProductProperty]
-type: unicode
-name: custom-post-deinstall
-multivalue: False
-editable: True
-description: Define filename for include script in custom directory after deinstallation
-values: ["custom_test.opsiinc", "none", "post-deinstall.opsiinc"]
-default: ["none"]
-{{/ifdef_legacy}}
-
-{{^ifdef_legacy}}
 [ProductProperty]
 type: bool
 name: desktop_link
@@ -126,7 +94,6 @@ editable: True
 description: Define filename for include script in custom directory after deinstallation
 values: ["custom_test.opsiinc", "none", "post_uninstall.opsiinc"]
 default: ["none"]
-{{/ifdef_legacy}}
 
 [ProductProperty]
 type: unicode

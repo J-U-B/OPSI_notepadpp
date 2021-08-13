@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-06-17 08:42:46 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2021-08-13 08:16:37 +0200
 ;======================================================================
 
 ;======================================================================
@@ -41,7 +41,7 @@ else
 		logError "Can't find uninstaller script"
 		isFatalError "delsub.opsiinc not found"
 	endif	
-{{^ifdef_legacy}}
+
 	; Start the installation
 	ShowBitmap $Img_Install$ $ProductName$
 	Message "Installing " + $ProductName$ + " " + $Version$+ " (" + $sw_arch$ + " bit)"
@@ -191,37 +191,9 @@ else
 	;=== measure installation time
 	set $TimeDiff$ = getDiffTimeSec
 	Message  "Setup time: " + $TimeDiff$ + " seconds"	
-{{/ifdef_legacy}}
 endif
 
-{{#ifdef_legacy}}
-;=== Prepare the change from dfn_ to o4i_
-; Stage 1 - logWarning
-; Stage 2 - logError (entire functionality)
-; Stage 3 - logError (NO functionality)
-; Stage 4 - logError (NO functionality except uninstall; no binaries) 
-;           removal of this package from repository pending
-;-----------------------------------------
-; This is stage 4
-;-----------------------------------------
-logError "*******************************************************************************************"
-logError "This package will not be maintained any longer!"
-logError "The functionality is completely taken over by o4i_" + $StrippedProductId$+"."
-logError "Please install o4i_" + $StrippedProductId$ + " from the repository."
-logError "dfn_" + $StrippedProductId$ + " should be removed the then from your depot."
-logError "*******************************************************************************************"
-logError "This is a FATAL ERROR!"
-logError "*******************************************************************************************"
-; set $result$ = "Package is of life"
-; set $result$ = currentProductSetReport($result$)
-Message "Updating status information for this package on depot"
-set $result$ = productSetActionRequest($ProductId$, "none")
-set $result$ = productExtUpdateOnClient($ProductId$, "forbidden", "not_installed", "failed", "Discontinued package!")
-isSuspended
-; isFatalError "Discontinued package!"
-{{/ifdef_legacy}}
  
-{{^ifdef_legacy}}
 ;======================================================================
 [Winbatch_install_msi]
 ;======================================================================
@@ -313,5 +285,3 @@ endif
 [files_restorePlugin]
 ;=====================================================================
 copy  -s "$TmpDir$%x%\" "$PluginDir$%x%"
-
-{{/ifdef_legacy}}
