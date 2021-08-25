@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.8.0
+# Version: 2.9.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2021-08-13 08:36:25 +0200
+# 2021-08-25 21:14:28 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
@@ -120,6 +120,13 @@ ifeq (,$(findstring [$(AFY)],$(ARCHIVE_TYPES)))
 else
 	BUILD_FORMAT = $(AFY)
 endif
+
+ifeq ($(CUSTOMNAME),"")
+	PKGNAME := ${TESTPREFIX}$(ORGPREFIX)$(SW_NAME)_${SW_VER}-$(PKG_BUILD)$(CUSTOMNAME)
+else
+	PKGNAME := ${TESTPREFIX}$(ORGPREFIX)$(SW_NAME)_${SW_VER}-$(PKG_BUILD)~$(CUSTOMNAME)
+endif
+
 
 
 leave_err:
@@ -425,6 +432,9 @@ build: download pdf clean copy_from_src
 		cd "$(CURDIR)/$(PACKAGE_DIR)" && $(OPSI_BUILDER) -F $(BUILD_FORMAT) -k -m $(CURDIR)/$(BUILD_DIR) -c $(CUSTOMNAME); \
 	fi; \
 	cd $(CURDIR)
+	@echo "======================================================================"
+	@echo "Package built: $(PACKAGE_DIR)/$(PKGNAME).opsi"
+	@echo "======================================================================"
 
 
 all_test:  header mpimsp_test o4i_test

@@ -1,3 +1,8 @@
+notepadpp 8.1.4-27:
+	* product update --> 8.1.4
+	* Makefile: echo name of package built
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-08-25 21:15:34 +0200
+
 notepadpp 8.1.3-26:
 	* product update --> 8.1.3
 	* updated helpers.opsifunc -> v1.7.1
