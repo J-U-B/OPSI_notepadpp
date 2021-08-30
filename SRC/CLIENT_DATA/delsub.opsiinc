@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2020-02-07 12:02:15 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2021-08-30 16:39:02 +0200
 ;=====================================================================
 
 
@@ -272,6 +272,8 @@ if ($Inst_Loc$ = "")
 else 
 	set $Uninst_RegDir$ = stringReplace(lower($Inst_Loc$) + "\", "\\", "\")
 endif
+; remove double quotes:
+set $Uninst_RegDir$ = stringReplace($Uninst_RegDir$, '"', '')
 
 ;======================================================================
 [files_deleteTemp]
