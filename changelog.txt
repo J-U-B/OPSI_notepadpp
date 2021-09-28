@@ -1,3 +1,7 @@
+notepadpp 8.1.5-28:
+	* product update --> 8.1.5
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-09-28 07:11:23 +0200
+
 notepadpp 8.1.4-28:
 	* fix for ExtractFilePath to get install directory
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2021-08-30 16:40:50 +0200
