@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-08-13 08:18:22 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2021-12-09 07:26:41 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -240,7 +240,7 @@ Set $CheckBin$          = "notepad++.exe"
 Set	$DefaultXML$        = $StrippedProductId$ + ".xml"
 Set $PathToExe$         = $InstallDir$ + $CheckBin$
 Set $TmpDir$            = "%opsiTmpDir%\" + $StrippedProductId$ + ".tmp\"
-Set $LogDir$            = "%SystemDrive%\tmp"
+Set $LogDir$            = "%opsiLogDir%"
 Set $Inst_Log$          = $LogDir$ + "\"+$ProductId$+"_install.log"
 Set $Uninst_Log$        = $LogDir$ + "\"+$ProductId$+"_uninstall.log"
 
