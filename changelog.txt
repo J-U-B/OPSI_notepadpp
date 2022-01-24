@@ -1,3 +1,9 @@
+notepadpp 8.2.1-30:
+	* product update --> 8.2.1
+	* adjusted check for main binary "notepad++.exe"
+	* fixed NSIS_Inst_Opts (quote installdir)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2022-01-24 18:53:45 +0100
+
 notepadpp 8.2-29:
 	* product update --> 8.2
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2022-01-03 10:02:01 +0100

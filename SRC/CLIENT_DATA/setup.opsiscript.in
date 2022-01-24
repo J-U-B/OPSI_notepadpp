@@ -2,7 +2,7 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-08-13 08:16:37 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2022-01-24 18:50:23 +0100
 ;======================================================================
 
 ;======================================================================
@@ -74,9 +74,8 @@ else
 	EndSwitch
 	
 	set $MainBin$ = $InstallDir$+$CheckBin$
-	
 	if not (FileExists($MainBin$))
-		logError "Main binary not found! [" + $InstallDir$+$MainBin$ + "]"
+		logError "Main binary not found! [" + $MainBin$ + "]"
 		isFatalError
 	endif
 	
