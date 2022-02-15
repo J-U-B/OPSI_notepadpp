@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-12-09 07:26:41 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2022-02-04 07:43:43 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -266,5 +266,5 @@ Set $MSI_Inst_Cmd$      = 'msiexec /i "' + $Installer$ +'" ' + $Inst_Opts$
 Set $MSI_Uninst_Cmd$    = "msiexec /x $ProductKey$ " + $Uninst_Opts$
 
 ;=== NSIS === (not used here)
-Set $NSIS_Inst_Opts$    = '/S  /D="' + $InstallDir$ + '"'
+Set $NSIS_Inst_Opts$    = '/S  /D=' + $InstallDir$
 Set $NSIS_Uninst_Opts$  = "/S"
