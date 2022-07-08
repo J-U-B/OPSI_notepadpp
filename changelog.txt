@@ -1,3 +1,9 @@
+notepadpp 8.4.3-33:
+	* product update --> 8.4.3
+	* changed handling of custom scripts (use SUB_POST_INSTALL and SUB_POST_UNINSTALL sections (optional))
+	* added [EOF_*] sections to setup and delsub (for incorrectly structured custom scripts)
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2022-07-08 12:59:20 +0200
+
 notepadpp 8.4.2-32:
 	* product update --> 8.4.2
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2022-06-07 07:16:49 +0200

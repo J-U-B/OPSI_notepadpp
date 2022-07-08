@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-08-30 16:39:02 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2022-07-08 12:55:59 +0200
 ;=====================================================================
 
 
@@ -32,22 +32,32 @@ else
 endif
 
 if not ( count ($ResultList$) = "0" )
-	
+
 	;=== process uninstall for all found uninstall sections:
 	for %id% in $ResultList$ do sub_Uninstall_ID
-	
+
 	;=== custom post uninstall
-	comment "include custom post uninstall file"
 	if not ($CustomPostUninstall$ = "none")
 		if FileExists("%ScriptPath%\custom\" + $CustomPostUninstall$)
 			ShowBitmap $Img_Uninstall_Custom$ $ProductName$
-			include_insert "%ScriptPath%\custom\" + $CustomPostUninstall$
+			comment "Starting custom post uninstall"
+			if LineExistsIn("[SUB_POST_INSTALL]", "%ScriptPath%\custom\" + $CustomPostInstall$)
+				include_append "%ScriptPath%\custom\" + $CustomPostUninstall$
+				comment "calling section: SUB_POST_INSTALL"
+				SUB_POST_UNINSTALL
+			else
+				comment "calling section: Sub_UninstallAppendix"
+				Sub_UninstallAppendix
+			endif
 			ShowBitmap $Img_Uninstall$ $ProductName$
+		else
+			logError "Can't find custom post uninstall script: %ScriptPath%\custom\" + $CustomPostUninstall$
 		endif
-	endif	
+	endif
+
 else
 	comment "Empty result list while searching for " + $ProductName$ + " in registry - does not seem to be installed"
-endif	
+endif
 
 ;=== update productOnClient information on depot server
 Message "Updating status information on depot"
@@ -285,3 +295,11 @@ del -sf "$TmpDir$"
 ;======================================================================
 copy  -se "$pluginDir$%x%\" "$TmpDir$%x%"
 
+
+;======================================================================
+[Sub_UninstallAppendix]
+;======================================================================
+include_insert "%ScriptPath%\custom\" + $CustomPostUninstall$
+
+
+[EOF_delsub]

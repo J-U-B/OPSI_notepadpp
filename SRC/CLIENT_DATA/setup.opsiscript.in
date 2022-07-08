@@ -1,8 +1,8 @@
 ;======================================================================
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
-; 
-; J. Boettge <boettge@mpi-halle.mpg.de>  2022-01-24 18:50:23 +0100
+;
+; J. Boettge <boettge@mpi-halle.mpg.de>  2022-07-08 12:54:25 +0200
 ;======================================================================
 
 ;======================================================================
@@ -176,20 +176,30 @@ else
 		comment "   Remove updater directory"
 		Files_uninstall_updater
 	endif
-	
+
 	;=== custom post install
-	comment "include custom post install file"
 	if not ($CustomPostInstall$ = "none")
 		if FileExists("%ScriptPath%\custom\" + $CustomPostInstall$)
 			ShowBitmap $Img_Install_Custom$ $ProductName$
-			include_insert "%ScriptPath%\custom\" + $CustomPostInstall$
+			comment "Starting custom post install"
+			if LineExistsIn("[SUB_POST_INSTALL]", "%ScriptPath%\custom\" + $CustomPostInstall$)
+				include_append "%ScriptPath%\custom\" + $CustomPostInstall$
+				comment "calling section: SUB_POST_INSTALL"
+				SUB_POST_INSTALL
+			else
+				comment "calling section: Sub_InstallAppendix"
+				Sub_InstallAppendix
+			endif
 			ShowBitmap $Img_Install$ $ProductName$
+		else
+			logError "Can't find custom post install script: %ScriptPath%\custom\" + $CustomPostInstall$
+			; isFatalError "delsub.opsiinc not found"
 		endif
 	endif
-	
+
 	;=== measure installation time
 	set $TimeDiff$ = getDiffTimeSec
-	Message  "Setup time: " + $TimeDiff$ + " seconds"	
+	Message  "Setup time: " + $TimeDiff$ + " seconds"
 endif
 
  
@@ -284,3 +294,12 @@ endif
 [files_restorePlugin]
 ;=====================================================================
 copy  -s "$TmpDir$%x%\" "$PluginDir$%x%"
+
+
+;=====================================================================
+[Sub_InstallAppendix]
+;=====================================================================
+include_insert "%ScriptPath%\custom\" + $CustomPostInstall$
+
+
+[EOF_setup]
