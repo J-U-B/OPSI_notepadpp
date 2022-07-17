@@ -1,3 +1,7 @@
+notepadpp 8.4.4-33:
+	* product update --> 8.4.4
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2022-07-17 13:46:55 +0200
+
 notepadpp 8.4.3-33:
 	* product update --> 8.4.3
 	* changed handling of custom scripts (use SUB_POST_INSTALL and SUB_POST_UNINSTALL sections (optional))
