@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2022-07-08 12:55:59 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2022-08-04 11:25:15 +0200
 ;=====================================================================
 
 
@@ -41,7 +41,7 @@ if not ( count ($ResultList$) = "0" )
 		if FileExists("%ScriptPath%\custom\" + $CustomPostUninstall$)
 			ShowBitmap $Img_Uninstall_Custom$ $ProductName$
 			comment "Starting custom post uninstall"
-			if LineExistsIn("[SUB_POST_INSTALL]", "%ScriptPath%\custom\" + $CustomPostInstall$)
+			if LineExistsIn("[SUB_POST_INSTALL]", "%ScriptPath%\custom\" + $CustomPostUninstall$)
 				include_append "%ScriptPath%\custom\" + $CustomPostUninstall$
 				comment "calling section: SUB_POST_INSTALL"
 				SUB_POST_UNINSTALL

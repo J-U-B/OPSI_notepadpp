@@ -193,7 +193,6 @@ else
 			ShowBitmap $Img_Install$ $ProductName$
 		else
 			logError "Can't find custom post install script: %ScriptPath%\custom\" + $CustomPostInstall$
-			; isFatalError "delsub.opsiinc not found"
 		endif
 	endif
 
