@@ -1,10 +1,10 @@
 {
 	"_": "=== OPSI package variables ===",
 	"O_PKG_VER"         : "35",
-	"O_SOFTWARE_VER"    : "8.5",
+	"O_SOFTWARE_VER"    : "8.5.1",
 	"O_SOFTWARE_NAME"   : "Notepad++",
 	"O_SOFTWARE"        : "notepadpp",
-	"O_SOFTWARE_CHANGES": "https://community.notepad-plus-plus.org/topic/24213/notepad-v8-5-is-released",
+	"O_SOFTWARE_CHANGES": "https://community.notepad-plus-plus.org/topic/24292/notepad-v8-5-1-release",
 	"O_RELEASE_DATE"    : "{{M_TODAY}}",
 	"O_INST_LOG"        : "/tmp/{{M_ORGPREFIX}}notepadpp__opsi_package_install.log",
 	"_":"NSIS installer (normally not required here)",
