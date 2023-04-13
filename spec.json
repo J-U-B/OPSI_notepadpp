@@ -1,6 +1,6 @@
 {
 	"_": "=== OPSI package variables ===",
-	"O_PKG_VER"         : "35",
+	"O_PKG_VER"         : "36",
 	"O_SOFTWARE_VER"    : "8.5.2",
 	"O_SOFTWARE_NAME"   : "Notepad++",
 	"O_SOFTWARE"        : "notepadpp",

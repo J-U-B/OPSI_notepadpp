@@ -2,26 +2,24 @@
 ; setup.ins NOTEPAD++
 ; Installer type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2022-07-08 12:54:25 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2023-04-13 11:59:35 +0200
 ;======================================================================
-
-;======================================================================
-[Initial]
-;======================================================================
-encoding=utf8
-setLogLevel=5
-; Log Errors in Logfile and abort:
-ExitOnError=true
-; Show syntax errors in the script:
-ScriptErrorMessages=off
-; Dont trace step by step through the script:
-TraceMode=off 
-; Let started programs run in front of the winst window
-StayOnTop=false 
 
 ;======================================================================
 [Actions]
 ;======================================================================
+encoding=utf8
+setLogLevel=5
+; Log Errors in Logfile but don't abort:
+ExitOnError=true
+; Show syntax errors in the script:
+ScriptErrorMessages=off
+; Dont trace step by step through the script:
+TraceMode=off
+; Let started programs run in front of the winst window
+StayOnTop=false
+;----------------------------------------------------------------------
+
 include_insert "%ScriptPath%\product_variables.opsiinc"
 
 

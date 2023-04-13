@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.9.0
+# Version: 2.10.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2021-08-25 21:14:28 +0200
+# 2023-04-13 13:04:06 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
@@ -342,6 +342,7 @@ copy_from_src:	build_dirs build_md5
 	fi
 	@if [ -d "$(SRC_DIR)/CLIENT_DATA/custom" ]; then  cp -upr $(SRC_DIR)/CLIENT_DATA/custom     $(BUILD_DIR)/CLIENT_DATA/ ; fi
 	@if [ -d "$(SRC_DIR)/CLIENT_DATA/files" ] ; then  cp -upr $(SRC_DIR)/CLIENT_DATA/files      $(BUILD_DIR)/CLIENT_DATA/ ; fi
+	@if [ -d "$(SRC_DIR)/CLIENT_DATA/hotfix" ]; then  cp -upr $(SRC_DIR)/CLIENT_DATA/hotfix     $(BUILD_DIR)/CLIENT_DATA/ ; fi
 	@if [ -d "$(SRC_DIR)/CLIENT_DATA/images" ]; then  \
 		mkdir -p "$(BUILD_DIR)/CLIENT_DATA/images"; \
 		cp -up $(SRC_DIR)/CLIENT_DATA/images/*.png  $(BUILD_DIR)/CLIENT_DATA/images/; \

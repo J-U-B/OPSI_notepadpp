@@ -1,10 +1,10 @@
-;=====================================================================
+;======================================================================
 ; uninstall.opsiscript (generic)
-; J. Boettge <boettge@mpi-halle.mpg.de>  2021-06-17 08:42:56 +0200
-;=====================================================================
+; J. Boettge <boettge@mpi-halle.mpg.de>  2023-04-13 11:59:13 +0200
+;======================================================================
 
 ;======================================================================
-[Initial]
+[Actions]
 ;======================================================================
 encoding=utf8
 setLogLevel=5
@@ -13,13 +13,11 @@ ExitOnError=true
 ; Show syntax errors in the script:
 ScriptErrorMessages=off
 ; Dont trace step by step through the script:
-TraceMode=off 
+TraceMode=off
 ; Let started programs run in front of the winst window
-StayOnTop=false 
+StayOnTop=false
+;----------------------------------------------------------------------
 
-;======================================================================
-[Actions]
-;======================================================================
 include_insert "%ScriptPath%\product_variables.opsiinc"
 
 Message "Uninstalling previous version of " + $ProductName$
