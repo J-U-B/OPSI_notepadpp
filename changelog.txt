@@ -1,3 +1,8 @@
+notepadpp 8.5.6-37:
+	* product update --> 8.5.6
+	* removed some DFN legacy code from Makefile and readme
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2023-08-15 19:48:40 +0200
+
 notepadpp 8.5.5-36:
 	* product update --> 8.5.5
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2023-08-11 07:45:56 +0200

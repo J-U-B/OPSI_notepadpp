@@ -26,7 +26,8 @@
 
 <div id="paketinfo"></div>
 
-Diese OPSI-Paket fuer **Notepad++** wurde fuer die Repositories von *OPSI 4 Institutes* und des *Max-Planck-Instituts fuer Mikrostrukturphysik* erstellt.  
+Diese OPSI-Paket fuer **Notepad++** wurde fuer die Repositories von *OPSI 4 Institutes*
+und des *Max-Planck-Instituts fuer Mikrostrukturphysik* erstellt.  
 Es wird versucht auf die Besonderheiten der jeweiligen Repositories einzugehen;
 entsprechend werden durch ein einfaches *Makefile* aus den Quellen verschiedene
 Pakete erstellt.
@@ -203,7 +204,6 @@ Praefixes in der Produkt-Id definieren die Art des Paketes:
 * **0_** - Es handelt sich um ein Test-Paket. Beim Uebergang zur Produktions-Release
 wird der Praefix entfernt.
 * **o4i_** - Das Paket ist zur Verwendung im Opsi4Institutes-Repository vorgesehen.
-* **dfn_** - Das Paket ist zur Verwendung im DFN-Repository vorgesehen. (**abgekuendigt**)
 
 Die Reihenfolge der Praefixes ist relevant; die Markierung als Testpaket ist 
 stets fuehrend.
@@ -299,4 +299,4 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 siehe Issues
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2021-06-17 09:10:20 +0200
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2023-08-15 19:45:01 +0200

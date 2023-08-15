@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.10.0
+# Version: 2.11.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2023-04-13 13:04:06 +0200
+# 2023-08-15 19:47:48 +0200
 ############################################################
 
 .PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
@@ -325,17 +325,12 @@ copy_from_src:	build_dirs build_md5
 			echo "    * cleanup directory"; \
 			rm -f $(BUILD_DIR)/CLIENT_DATA/files/*; \
 		fi; \
-		if [ "$(ORGPREFIX)" = "dfn_" ]; then \
-			# temporary for dfn; will be removed in package version 20; \
-			echo "    * skipping copy of install packages since we are END OF LIFE"; \
-		else \
-			echo "    * including install packages"; \
-		    echo "      * files found   : $(NUM_FILES)"; \
-			echo "      * files expected: $(FILES_EXPECTED)"; \
-			[ "$(NUM_FILES)" -lt "$(FILES_EXPECTED)" ] && exit 1; \
-			for F in `ls $(DL_DIR)/$(FILES_MASK)`; do echo "      + $$F"; ln $$F $(BUILD_DIR)/CLIENT_DATA/files/; done; \
-			ls -l $(BUILD_DIR)/CLIENT_DATA/files/ ;\
-		fi; \
+		echo "    * including install packages"; \
+		echo "      * files found   : $(NUM_FILES)"; \
+		echo "      * files expected: $(FILES_EXPECTED)"; \
+		[ "$(NUM_FILES)" -lt "$(FILES_EXPECTED)" ] && exit 1; \
+		for F in `ls $(DL_DIR)/$(FILES_MASK)`; do echo "      + $$F"; ln $$F $(BUILD_DIR)/CLIENT_DATA/files/; done; \
+		ls -l $(BUILD_DIR)/CLIENT_DATA/files/ ;\
 	else \
 		echo "    * removing $(BUILD_DIR)/CLIENT_DATA/files"; \
 		rm -rf $(BUILD_DIR)/CLIENT_DATA/files ; \
