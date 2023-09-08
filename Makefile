@@ -1,11 +1,11 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.11.0
+# Version: 2.12.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2023-08-15 19:47:48 +0200
+# 2023-09-08 09:30:57 +0200
 ############################################################
 
-.PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf
+.PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf install
 .DEFAULT_GOAL := help
 
 ### defaults:
@@ -55,6 +55,7 @@ endif
 SW_VER := $(shell grep '"O_SOFTWARE_VER"' $(SPEC)     | sed -e 's/^.*\s*:\s*\"\(.*\)\".*$$/\1/' )
 # SW_BUILD := $(shell grep '"O_SOFTWARE_BUILD"' $(SPEC) | sed -e 's/^.*\s*:\s*\"\(.*\)\".*$$/\1/' )
 SW_NAME := $(shell grep '"O_SOFTWARE"' $(SPEC)        | sed -e 's/^.*\s*:\s*\"\(.*\)\".*$$/\1/' )
+SW_FNAME := $(shell grep '"O_SOFTWARE_NAME"' $(SPEC)  | sed -e 's/^.*\s*:\s*\"\(.*\)\".*$$/\1/' )
 PKG_BUILD := $(shell grep '"O_PKG_VER"' $(SPEC)       | sed -e 's/^.*\s*:\s*\"\(.*\)\".*$$/\1/' )
 
 #FILES_MASK := $(SW_NAME)-$(SW_VER)-$(SW_BUILD)-*.exe
@@ -64,8 +65,8 @@ PKG_BUILD := $(shell grep '"O_PKG_VER"' $(SPEC)       | sed -e 's/^.*\s*:\s*\"\(
 #=================================================
 SW_VER_REG := $(shell echo $(SW_VER) | sed -e 's/\./\\./g')
 #FILES_MASK := npp.$(SW_VER).Installer*.exe
-FILES_MASK := notepadpp-$(SW_VER)-x[36][24].exe
-GREP_MASK  := notepadpp-$(SW_VER_REG)-x(32|64)\.exe
+FILES_MASK := $(SW_NAME)-$(SW_VER)-x[36][24].exe
+GREP_MASK  := $(SW_NAME)-$(SW_VER_REG)-x(32|64)\.exe
 FILES_EXPECTED = 2
 #=================================================
 
@@ -126,7 +127,6 @@ ifeq ($(CUSTOMNAME),"")
 else
 	PKGNAME := ${TESTPREFIX}$(ORGPREFIX)$(SW_NAME)_${SW_VER}-$(PKG_BUILD)~$(CUSTOMNAME)
 endif
-
 
 
 leave_err:
@@ -221,17 +221,17 @@ o4i_test_noprefix: header
 clean_packages: header
 	@echo "---------- cleaning packages, checksums and zsync ----------------"
 	@rm -f $(PACKAGE_DIR)/*.md5 $(PACKAGE_DIR)/*.opsi $(PACKAGE_DIR)/*.zsync
-	
+
 clean: header
 	@echo "---------- cleaning  build directory & downloader-----------------"
 	@rm -rf $(BUILD_DIR)	
 	@rm -f product_downloader.sh
-	
-	
+
 realclean: header clean
 	@echo "---------- cleaning download directory ---------------------------"
 	@rm -rf $(DL_DIR)
-		
+
+
 help: header
 	@echo "Valid targets: "
 	@echo "	mpimsp"
@@ -258,6 +258,7 @@ help: header
 	@echo "			If false only files matching this package version are kept."
 	@echo "	ARCHIVE_FORMAT=[cpio|tar]       (default: $(DEFAULT_ARCHIVEFORMAT))"
 	@echo ""
+
 
 pdf:
 	@# requirements for ths script (under Debian/Ubuntu):
@@ -291,12 +292,15 @@ pdf:
 		echo "* Error: readme.md is missing!"; \
 	fi
 
+
 build_dirs:
 	@echo "* Creating/checking directories"
 	@if [ ! -d "$(BUILD_DIR)" ]; then mkdir -p "$(BUILD_DIR)"; fi
 	@if [ ! -d "$(BUILD_DIR)/OPSI" ]; then mkdir -p "$(BUILD_DIR)/OPSI"; fi
 	@if [ ! -d "$(BUILD_DIR)/CLIENT_DATA" ]; then mkdir -p "$(BUILD_DIR)/CLIENT_DATA"; fi
 	@if [ ! -d "$(PACKAGE_DIR)" ]; then mkdir -p "$(PACKAGE_DIR)"; fi
+
+
 build_md5:
 	@echo "* Creating md5sum file for installation archives ($(MD5SUM_FILE))"
 	if [ -f "$(BUILD_DIR)/CLIENT_DATA/$(MD5SUM_FILE)" ]; then \
@@ -304,7 +308,7 @@ build_md5:
 	fi
 	# @grep -i "$(SW_NAME).$(SW_VER)." $(DL_DIR)/$(MD5SUM_FILE)>> $(BUILD_DIR)/CLIENT_DATA/$(MD5SUM_FILE) \
 	grep -E "$(GREP_MASK)" $(DL_DIR)/$(MD5SUM_FILE)>> $(BUILD_DIR)/CLIENT_DATA/$(MD5SUM_FILE) ; \
-	
+
 
 copy_from_src:	build_dirs build_md5
 	@echo "* Copying files"
@@ -346,6 +350,7 @@ copy_from_src:	build_dirs build_md5
 	@if [ -f  "$(SRC_DIR)/OPSI/preinst" ];  then cp -up $(SRC_DIR)/OPSI/preinst   $(BUILD_DIR)/OPSI/; fi 
 	@if [ -f  "$(SRC_DIR)/OPSI/postinst" ]; then cp -up $(SRC_DIR)/OPSI/postinst  $(BUILD_DIR)/OPSI/; fi
 
+
 build_json:
 	@if [ ! -f "$(SPEC)" ]; then echo "*Error* spec file not found: \"$(SPEC)\""; exit 1; fi
 	@if [ ! -d "$(BUILD_DIR)" ]; then mkdir -p "$(BUILD_DIR)"; fi
@@ -365,27 +370,30 @@ build_json:
 	@$(MUSTACHE) $(TMP_FILE) $(SPEC)	 > $(BUILD_JSON)
 	@rm -f $(TMP_FILE)
 
+
 download: build_json
-	@echo "**Debug** [ALLINC=$(ALLINCLUSIVE)]  [ONLY_DOWNLOAD=$(ONLY_DOWNLOAD)]"
-	@if [ "$(ALLINCLUSIVE)" = "true" -o  $(ONLY_DOWNLOAD) = "true" ]; then \
+	@echo "[DBG] Vars: [ALLINC=$(ALLINCLUSIVE)]  [ONLY_DOWNLOAD=$(ONLY_DOWNLOAD)]"
+	@$(eval NUM_FOUND := $(shell ls -l $(DL_DIR)/$(FILES_MASK) 2>/dev/null | wc -l))
+	@echo "[DBG] $(SW_NAME) installer packages found: $(NUM_FOUND), expected: $(FILES_EXPECTED)"
+	@if [ "$(ALLINCLUSIVE)" = "true" -o  $(ONLY_DOWNLOAD) = "true" -o $(NUM_FOUND) -ne $(FILES_EXPECTED) ]; then \
 		rm -f $(DOWNLOAD_SH) ;\
 		$(MUSTACHE) $(BUILD_JSON) $(DOWNLOAD_SH_IN) > $(DOWNLOAD_SH) ;\
 		chmod +x $(DOWNLOAD_SH) ;\
 		if [ ! -d "$(DL_DIR)" ]; then mkdir -p "$(DL_DIR)"; fi ;\
 		DEST_DIR=$(DL_DIR) $(DOWNLOAD_SH) ;\
 	fi
-	
-	
+
+
 build: download pdf clean copy_from_src
 	@make build_json
-	
+
 	for F in $(FILES_OPSI_IN); do \
 		echo "* Creating OPSI/$$F"; \
 		rm -f $(BUILD_DIR)/OPSI/$$F; \
 		$(MUSTACHE) $(BUILD_JSON) $(SRC_DIR)/OPSI/$$F.in > $(BUILD_DIR)/OPSI/$$F; \
 	done
 
-	for E in readme.txt readme.md readme.pdf changelog.md changelog.pdf; do \
+	for E in readme.txt readme.md readme.pdf changelog.txt changelog.md changelog.pdf; do \
 		if [ -e $$E ]; then \
 			echo "Copying additional file: $$E"; \
 			cp -fupL $$E $(BUILD_DIR)/CLIENT_DATA/; \
@@ -438,3 +446,16 @@ all_test:  header mpimsp_test o4i_test
 all_prod : header mpimsp o4i
 
 all : header mpimsp o4i mpimsp_test o4i_test
+
+
+install:
+	@$(eval PACKAGES_FOUND := $(shell ls -tr1 $(PACKAGE_DIR)/*.opsi | grep -E "$(SW_NAME)_$(SW_VER)-$(PKG_BUILD)(~dl){0,1}.opsi$$" ))
+	@$(eval PKG_NUM := $(shell echo $(PACKAGES_FOUND) | wc -w))
+	@echo "Number of installable packages found: $(PKG_NUM)"
+	@if [ $(PKG_NUM) -gt 0 ]; then \
+		for F in $(PACKAGES_FOUND); do \
+			echo -n "* Installing: $$F" ;\
+			opsi-package-manager -q -p package -i $$F ;\
+			echo "\t[$$?]" ;\
+		done ;\
+	fi

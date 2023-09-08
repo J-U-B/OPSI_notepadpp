@@ -1,3 +1,10 @@
+notepadpp 8.5.7-38:
+	* product update --> 8.5.7
+	* minor improvements of Makefile
+	  * new target 'install'
+	  * code cleanup
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2023-09-08 09:30:49 +0200
+
 notepadpp 8.5.6-37:
 	* product update --> 8.5.6
 	* removed some DFN legacy code from Makefile and readme
