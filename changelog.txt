@@ -1,3 +1,7 @@
+notepadpp 8.6.1-38:
+	* product update --> 8.6.1
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-01-08 06:37:38 +0100
+
 notepadpp 8.6-38:
 	* product update --> 8.6
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2023-11-23 18:45:52 +0100
