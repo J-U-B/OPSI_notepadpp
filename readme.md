@@ -110,16 +110,31 @@ Standardmaessig sollen die Files geloescht werden.
 
 OPSI erlaubt des Pakete im Format <code>cpio</code> und <code>tar</code> zu erstellen.  
 Als Standard ist <code>cpio</code> festgelegt.  
+**_Achtung:_** Ab OPSI 4.3 findet nur noch das `tar`-Format Awendung.  
 Das Makefile erlaubt die Wahl des Formates ueber die Umgebungsvariable bzw. den Parameter:
 
 > *<code>ARCHIVE_FORMAT=&lt;cpio|tar&gt;</code>*
+
+Optional kann auch das verwendete Kompressionsformat festgelegt werden.  
+Ab OPSI-Version 4.3 sind das `gz`, `zstd` und `bz2`; zuvor gab es `gzip` und `zstd`.
+Default bei OPSI 4.3 ist `zstd`, bis dahin galt `gz` bzw. `gzip`.  
+Als Standard ist `gz`/`gzip` festgelegt.  
+Das Makefile erlaubt die Wahl der Kompressionsformates ueber eine Umgebungsvariable bzw.
+den Parameter in Abhaengigkeit von der OPSI-Version:
+
+> *<code>COMPRESSION=&lt;gzip|zstd&gt;</code>*  
+> *<code>COMPRESSION=&lt;gz|zstd|bz2&gt;</code>*
+
+**_Achtung:_** Obwohl fuer OPSI 4.3 "`zstd`" als Standard-Kompression zum Einsatz kommt,
+wird hier weiterhin "`gz`" verwendet, da die mit "`zstd`" erstellten Pakete unter OPSI 4.2
+derzeit nicht installiert werden koennen.
 
 
 <div id="spec_json"></div>
 
 ### spec.json ###
 
-Haeufig beschraenkt sich die Aktualisierung eines Paketes auf das Aendern der 
+Haeufig beschraenkt sich die Aktualisierung eines Paketes auf das Aendern der
 Versionsnummern und des Datums etc. In einigen Faellen ist jedoch auch das Anpassen
 weiterer Variablen erforderlich, die sich auf verschiedene Files verteilen.  
 Auch das soll durch das Makefile vereinfacht werden. Die relevanten Variablen
@@ -269,7 +284,8 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 Der Autor behaelt sich eine Anpassung bzw. weitere Ausformulierung der Lizenzbedingungen
 vor.
 
-Fuer die Nutzung wird das *.NET Framework ab v3.5*  benoetigt.
+Fuer die Nutzung von `psdetail.exe` wird das _.NET Framework ab v3.5_ benoetigt, fuer
+`psdetail4.exe` (ab Windows 10) das _.NET Framework ab v4.0_.
 
 <div id="lic_getrealname"></div>
 
@@ -299,4 +315,4 @@ Alle Risiken des Softwareeinsatzes liegen beim Nutzer.
 siehe Issues
 
 -----
-Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2023-08-15 19:45:01 +0200
+Jens Boettge <<boettge@mpi-halle.mpg.de>>, 2024-01-09 10:39:09 +0100

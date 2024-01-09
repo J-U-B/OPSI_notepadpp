@@ -1,8 +1,8 @@
 ############################################################
 # OPSI package Makefile (NOTEPAD++)
-# Version: 2.12.0
+# Version: 3.0.0
 # Jens Boettge <boettge@mpi-halle.mpg.de>
-# 2023-09-08 09:30:57 +0200
+# 2024-01-09 10:28:24 +0100
 ############################################################
 
 .PHONY: header clean mpimsp o4i o4i_test all_test all_prod all help download pdf install
@@ -12,7 +12,7 @@
 DEFAULT_SPEC = spec.json
 DEFAULT_ALLINC = true
 DEFAULT_KEEPFILES = false
-DEFAULT_ARCHIVEFORMAT = cpio
+
 ### to keep the changelog inside the control set CHANGELOG_TGT to an empty string
 ### otherwise the given filename will be used:
 CHANGELOG_TGT = changelog.txt
@@ -30,7 +30,28 @@ ifeq ($(OPSI_BUILDER),)
 		$(error Error: opsi-make(package|productfile) not found!)
 	endif
 endif
-$(info * OPSI_BUILDER = $(OPSI_BUILDER))
+OPSI_VERSION = $(shell $(OPSI_BUILDER) -V | cut -f 1 -d " ")
+$(info * OPSI_BUILDER = $(OPSI_BUILDER) $(OPSI_VERSION))
+O_MAJOR = $(shell echo $(OPSI_VERSION) | cut -f1 -d.)
+O_MINOR = $(shell echo $(OPSI_VERSION) | cut -f2 -d.)
+O_REVNR = $(shell echo $(OPSI_VERSION) | cut -f3 -d.)
+O_VERCL = $(shell echo $$(($(O_MAJOR) * 100 + $(O_MINOR))))
+# $(info * VERCL = $(O_VERCL))
+
+### more defaults, depending on OPSI version:
+ifeq ($(shell test "$(O_VERCL)" -ge "403"; echo $$?),0)
+    $(info * OPSI >=4.3)
+	DEFAULT_ARCHIVEFORMAT = tar
+	ARCHIVE_TYPES :="[tar]"
+	DEFAULT_COMPRESSION = gz
+	COMPRESSION_TYPES :="[gz] [zstd] [bz2]"
+else
+    $(info * OPSI <4.3)
+	DEFAULT_ARCHIVEFORMAT = cpio
+	ARCHIVE_TYPES :="[cpio] [tar]"
+	DEFAULT_COMPRESSION = gzip
+	COMPRESSION_TYPES :="[gzip] [zstd]"
+endif
 
 MUSTACHE = ./SRC/TOOLS/mustache.32
 BUILD_JSON = $(BUILD_DIR)/build.json
@@ -112,15 +133,26 @@ endif
 
 ### Used archive format for OPSI package
 ARCHIVE_FORMAT ?= $(DEFAULT_ARCHIVEFORMAT)
-ARCHIVE_TYPES :="[cpio] [tar]"
 AFX := $(firstword $(ARCHIVE_FORMAT))
 AFY := $(shell echo $(AFX) | tr A-Z a-z)
 
 ifeq (,$(findstring [$(AFY)],$(ARCHIVE_TYPES)))
-	BUILD_FORMAT = cpio
+	BUILD_FORMAT := cpio
 else
-	BUILD_FORMAT = $(AFY)
+	BUILD_FORMAT := $(AFY)
 endif
+
+### Used compression for OPSI package
+COMPRESSION ?= $(DEFAULT_COMPRESSION)
+AFX := $(firstword $(COMPRESSION))
+AFY := $(shell echo $(AFX) | tr A-Z a-z)
+
+ifeq (,$(findstring [$(AFY)],$(COMPRESSION_TYPES)))
+	BUILD_COMPRESSION := $(DEFAULT_COMPRESSION)
+else
+	BUILD_COMPRESSION := $(AFY)
+endif
+
 
 ifeq ($(CUSTOMNAME),"")
 	PKGNAME := ${TESTPREFIX}$(ORGPREFIX)$(SW_NAME)_${SW_VER}-$(PKG_BUILD)$(CUSTOMNAME)
@@ -136,19 +168,22 @@ var_test:
 	@echo "=================================================================="
 	@echo "* Software Name         : [$(SW_NAME)]"
 	@echo "* Software Version      : [$(SW_VER)]"
-	@# @echo "* Software Build        : [$(SW_BUILD)]"
+	@# @echo "* Software Build     : [$(SW_BUILD)]"
 	@echo "* Package Build         : [$(PKG_BUILD)]"
 	@echo "* SPEC file             : [$(SPEC)]"
 	@echo "* Batteries included    : [$(ALLINC)] --> [$(ALLINCLUSIVE)]"
 	@echo "* Custom Name           : [$(CUSTOMNAME)]"
 	@echo "* OPSI Archive Types    : [$(ARCHIVE_TYPES)]"
 	@echo "* OPSI Archive Format   : [$(ARCHIVE_FORMAT)] --> $(BUILD_FORMAT)"
+	@echo "* OPSI Compression Types: [$(COMPRESSION_TYPES)]"
+	@echo "* OPSI Compression      : [$(COMPRESSION)] --> $(BUILD_COMPRESSION)"
 	@echo "* Templates OPSI        : [$(FILES_OPSI_IN)]"
 	@echo "* Templates CLIENT_DATA : [$(FILES_IN)]"
 	@echo "* Files Mask            : [$(FILES_MASK)]"
 	@echo "* Grep Mask             : [$(GREP_MASK)]"
 	@echo "* Keep files            : [$(KEEPFILES)]"
 	@echo "* Changelog target      : [$(CHANGELOG_TGT)]"
+	@echo "* OPSI Builder Version  : [$(OPSI_VERSION)]"
 	@echo "=================================================================="
 	@echo "* Installer files in $(DL_DIR):"
 	@# @for F in `ls -1 $(DL_DIR)/$(FILES_MASK) | sed -re 's/.*\/(.*)$$/\1/' `; do echo "    $$F"; done 
@@ -256,7 +291,13 @@ help: header
 	@echo "	KEEPFILES=[true|false]          (default: $(DEFAULT_KEEPFILES))"
 	@echo "			Keep really all previous files from 'files' directory?"
 	@echo "			If false only files matching this package version are kept."
-	@echo "	ARCHIVE_FORMAT=[cpio|tar]       (default: $(DEFAULT_ARCHIVEFORMAT))"
+	@if [ $(O_VERCL) -ge 403 ]; then \
+	 echo "	ARCHIVE_FORMAT=[cpio|tar]       (default: $(DEFAULT_ARCHIVEFORMAT))"; \
+	 echo "	COMPRESSION=[gz|zstd|bz2]       (default: $(DEFAULT_COMPRESSION))"; \
+	else \
+	 echo "	ARCHIVE_FORMAT=[tar]            (default: $(DEFAULT_ARCHIVEFORMAT))"; \
+	 echo "	COMPRESSION=[gzip|zstd]         (default: $(DEFAULT_COMPRESSION))"; \
+    fi
 	@echo ""
 
 
@@ -427,13 +468,13 @@ build: download pdf clean copy_from_src
 	@echo "* OPSI Archive Format: $(BUILD_FORMAT)"
 	@echo "* Building OPSI package"
 	if [ -z $(CUSTOMNAME) ]; then \
-		cd "$(CURDIR)/$(PACKAGE_DIR)" && $(OPSI_BUILDER) -F $(BUILD_FORMAT) -k -m $(CURDIR)/$(BUILD_DIR); \
+		cd "$(CURDIR)/$(PACKAGE_DIR)" && $(OPSI_BUILDER) -F $(BUILD_FORMAT) --compression $(BUILD_COMPRESSION) -k -m $(CURDIR)/$(BUILD_DIR); \
 	else \
 		cd $(CURDIR)/$(BUILD_DIR) && \
 		for D in OPSI CLIENT_DATA SERVER_DATA; do \
 			if [ -d "$$D" ] ; then mv $$D $$D.$(CUSTOMNAME); fi; \
 		done && \
-		cd "$(CURDIR)/$(PACKAGE_DIR)" && $(OPSI_BUILDER) -F $(BUILD_FORMAT) -k -m $(CURDIR)/$(BUILD_DIR) -c $(CUSTOMNAME); \
+		cd "$(CURDIR)/$(PACKAGE_DIR)" && $(OPSI_BUILDER) -F $(BUILD_FORMAT) --compression $(BUILD_COMPRESSION) -k -m $(CURDIR)/$(BUILD_DIR) -c $(CUSTOMNAME); \
 	fi; \
 	cd $(CURDIR)
 	@echo "======================================================================"

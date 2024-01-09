@@ -1,3 +1,8 @@
+notepadpp 8.6.1-39:
+	* refined Makefile for OPSI 4.3 (handle compression)
+	* update readme.md
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-01-09 11:07:24 +0100
+
 notepadpp 8.6.1-38:
 	* product update --> 8.6.1
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-01-08 06:37:38 +0100
