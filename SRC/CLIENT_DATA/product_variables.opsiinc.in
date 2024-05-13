@@ -154,7 +154,7 @@ else
 	set $InstallBase$ = "%ProgramFiles32Dir%"
 endif
 
-if ($SystemType$="x86 System") and ($sw_arch$="64")
+if ($SystemType$="x32") and ($sw_arch$="64")
 	LogError "Cannot install 64 bit version of " + $ProductName$ + " on a 32 bit operating system!"
 	isFatalError
 endif

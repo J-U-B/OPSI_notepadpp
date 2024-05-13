@@ -1,3 +1,14 @@
+notepadpp 8.6.7-40:
+	* product update --> 8.6.7
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-05-13 07:14:37 +0200
+
+notepadpp 8.6.6-40:
+	* product update --> 8.6.6
+	* fixed typo in control.in
+	* fixed system type check in product_variables
+	* updated helpers.opsifunc -> v1.9.1
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-05-10 09:51:05 +0200
+
 notepadpp 8.6.5-39:
 	* product update --> 8.6.5
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2024-04-02 07:06:54 +0200
