@@ -2,7 +2,7 @@
 ; delsub.opsiinc NOTEPAD++
 ; Uninstaller type: NSIS
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2023-04-13 12:55:47 +0200
+; J. Boettge <boettge@mpi-halle.mpg.de>  2025-07-10 07:58:30 +0200
 ;=====================================================================
 
 
@@ -170,9 +170,6 @@ set $Kill_Override$ = "false"
 set $PSDETAIL_MODE$ = ""
 sub_checkinstance
 
-;=== temporary uninstaller hotfix for NPP 8.5.1
-sub_hotfix_851
-
 ;=== save plugins for restore if requested
 if ($ActionRequest$="setup") and ($pr_KeepPlugins$= "True")
 	if FileExists($pluginDir$)
@@ -303,21 +300,5 @@ copy  -se "$pluginDir$%x%\" "$TmpDir$%x%"
 [Sub_UninstallAppendix]
 ;======================================================================
 include_insert "%ScriptPath%\custom\" + $CustomPostUninstall$
-
-
-;======================================================================
-[sub_hotfix_851]
-;======================================================================
-if $Inst_Ver$ = "8.5.1"
-	logWarning "Copy missing DLL to avoid uninstall error for version " + $Inst_Ver$
-	if not ($Uninst_RegDir$ = "")
-		files_copyHotfix_851
-	endif
-endif
-
-;======================================================================
-[files_copyHotfix_851]
-;======================================================================
-copy  -se "%ScriptPath%\hotfix\$Inst_Ver$\*" "$Uninst_RegDir$"
 
 [EOF_delsub]

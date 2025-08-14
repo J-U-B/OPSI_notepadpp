@@ -1,3 +1,11 @@
+notepadpp 8.8.5-41:
+	* product update --> 8.8.5
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2025-08-14 07:50:10 +0200
+
+notepadpp 8.8.3-41:
+	* hotfix for 8.5.1 removed
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2025-07-10 07:09:35 +0200
+
 notepadpp 8.8.3-40:
 	* product update --> 8.8.3
 	-- J. Boettge <boettge@mpi-halle.mpg.de>	2025-07-10 07:09:35 +0200
