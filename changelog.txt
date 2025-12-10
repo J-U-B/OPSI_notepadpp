@@ -1,3 +1,7 @@
+notepadpp 8.8.9-43:
+	* Fix: allow updater via property; default: no
+	-- J. Boettge <boettge@mpi-halle.mpg.de>	2025-12-10 22:40:47 +0100
+
 notepadpp 8.8.9-42:
 	* product update --> 8.8.9
 	* Installer with NOUPDATER parameter

@@ -256,7 +256,11 @@ Set $Uninstaller$       = $InstallDir$ + $Uninst_Prg$
 ; ...oder UninstallString aus Registry
 
 ;=== INNO ===
+if ($pr_Updater$ = "no")
 Set $INNO_Inst_Opts$    = '/SP- /SILENT /NOCANCEL /NORESTART /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES /NOUPDATER /LANG=english /DIR="' + $InstallDir$ +'" /GROUP="' + $ProductName$ +'" /LOG="'+ $Inst_Log$ +'"'
+else
+Set $INNO_Inst_Opts$    = '/SP- /SILENT /NOCANCEL /NORESTART /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES /LANG=english /DIR="' + $InstallDir$ +'" /GROUP="' + $ProductName$ +'" /LOG="'+ $Inst_Log$ +'"'
+endif
 Set $INNO_Uninst_Opts$  = '/SILENT /NORESTART /LOG="'+ $Uninst_Log$ +'"'
 
 ;=== MSI === (not used for installation here)
