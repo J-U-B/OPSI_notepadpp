@@ -1,7 +1,7 @@
 ;=====================================================================
 ; product specific variables NOTEPAD++
 ;
-; J. Boettge <boettge@mpi-halle.mpg.de>  2022-02-04 07:43:43 +0100
+; J. Boettge <boettge@mpi-halle.mpg.de>  2025-12-10 22:16:35 +0100
 ;=====================================================================
 
 include_insert "%ScriptPath%\variables.opsiinc"
@@ -256,7 +256,7 @@ Set $Uninstaller$       = $InstallDir$ + $Uninst_Prg$
 ; ...oder UninstallString aus Registry
 
 ;=== INNO ===
-Set $INNO_Inst_Opts$    = '/SP- /SILENT /NOCANCEL /NORESTART /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES /LANG=english /DIR="' + $InstallDir$ +'" /GROUP="' + $ProductName$ +'" /LOG="'+ $Inst_Log$ +'"'
+Set $INNO_Inst_Opts$    = '/SP- /SILENT /NOCANCEL /NORESTART /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES /NOUPDATER /LANG=english /DIR="' + $InstallDir$ +'" /GROUP="' + $ProductName$ +'" /LOG="'+ $Inst_Log$ +'"'
 Set $INNO_Uninst_Opts$  = '/SILENT /NORESTART /LOG="'+ $Uninst_Log$ +'"'
 
 ;=== MSI === (not used for installation here)
